@@ -25,13 +25,13 @@ I use the following pieces of software. Might be useful to you too:
   + [suckless image viewer](https://github.com/muennich/sxiv)
   + [suckless status](https://tools.suckless.org/slstatus/)
   + [suckless terminal](https://st.suckless.org/)
-  + [tmux](https://github.com/tmux/tmux)<sup>#</sup>
+  + [tmux](https://github.com/tmux/tmux)
   + [zathura](https://pwmt.org/projects/zathura/), for all-things PDF and more!
   + [zsh](https://www.zsh.org/)
 
 * Minor:
   + [bat](https://github.com/sharkdp/bat)
-  + [exa](https://github.com/ogham/exa)<sup>#</sup>
+  + [exa](https://github.com/ogham/exa)
   + [fontpreview-ueberzug](https://github.com/OliverLew/fontpreview-ueberzug)
   + [fzf](https://github.com/junegunn/fzf)
   + [zinit](https://github.com/zdharma/zinit) stuff
