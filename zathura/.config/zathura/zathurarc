@@ -1,0 +1,73 @@
+####################
+# General Settings #
+####################
+
+set recolor-reverse-video true
+set selection-clipboard "clipboard"
+set window-title-basename "true"
+set font "JuliaMono 12"
+
+###################
+# Custom mappings #
+###################
+
+map - zoom out
+map = zoom in
+map R rotate
+map d scroll half-down
+map i recolor
+map r reload
+map u scroll half-up
+map w zoom width
+
+########################
+# Default++ Colorscheme#
+########################
+
+set notification-error-bg       "#ff5454" # LighterRed
+set notification-error-fg       "#ffffd7" # Foreground
+set notification-warning-bg     "#f09479" # Orangeish
+set notification-warning-fg     "#e3c78a" # Selection
+set notification-bg             "#080808" # Background
+set notification-fg             "#ffffd7" # Foreground
+
+set completion-bg               "#080808" # Background
+set completion-fg               "#45195e" # Dual to ForestyGreen
+set completion-group-bg         "#080808" # Background
+set completion-group-fg         "#323437" # LighterGrey
+set completion-highlight-bg     "#195e45" # ForestyGreen
+set completion-highlight-fg     "#ffffd7" # Foreground
+
+set index-bg                    "#080808" # Background
+set index-fg                    "#ae81ff" # Foreground
+set index-active-bg             "#195e45" # Current Line
+set index-active-fg             "#ffffd7" # Foreground
+
+set inputbar-bg                 "#080808" # Background
+set inputbar-fg                 "#ffffd7" # Foreground
+set statusbar-bg                "#080808" # Background
+set statusbar-fg                "#ffffd7" # Foreground
+
+set highlight-color             "#de935f" # Light Orangeish
+set highlight-active-color      "#d183e8" # Pink
+
+set default-bg                  "#080808" # Background
+set default-fg                  "#ffffd7" # Foreground
+
+set render-loading              true
+set render-loading-fg           "#080808" # Background
+set render-loading-bg           "#ffffd7" # Foreground
+
+#########################
+# Recolor mode settings #
+#########################
+
+set recolor-lightcolor          "#080808" # Background
+set recolor-darkcolor           "#ffffd7" # Foreground
+
+###################
+# Startup options #
+###################
+
+set recolor true
+set adjust-open width
