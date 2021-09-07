@@ -49,7 +49,6 @@ source $XDG_CONFIG_HOME/nvim/config/status.vimrc
 
 lua << EOF
     require("colorizer").setup{}
-    require("zen-mode").setup{}
     require("telescope").setup{
         defaults = {
             winblend = 10,
