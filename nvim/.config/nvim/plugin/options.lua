@@ -28,6 +28,8 @@ opt.completeopt = {
     'noselect'
 }
 
+opt.autochdir = true                           -- Automove to buffer's directory
+opt.formatoptions:remove({ 'c', 'r', 'o' })    -- Stop autocommenting!
 opt.expandtab = true                           -- Expand <Tab> to spaces
 opt.foldlevel = 99                             -- Fold till where?
 opt.foldmethod = "indent"                      -- Fold at what?

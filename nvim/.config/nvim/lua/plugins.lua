@@ -90,8 +90,6 @@ return require('packer').startup({
             requires = {
                 -- snippet engine
                 'hrsh7th/vim-vsnip',
-                -- buffer completion source
-                'hrsh7th/cmp-buffer',
                 -- lsp-based completion source
                 'hrsh7th/cmp-nvim-lsp'
             }

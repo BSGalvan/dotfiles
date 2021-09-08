@@ -9,19 +9,21 @@ if fn.empty(fn.glob(install_path)) > 0 then
   vim.cmd 'packadd packer.nvim'
 end
 
-cmd([[
-    augroup easymode
-        au!
-        au FileType * setlocal formatoptions-=cro    "Turn autocommenting off
-        au BufEnter * silent! lcd %:p:h              "Jump to dir of local buffer
-        au BufWritePost init.lua,*.vimrc source %    "Source init.lua upon saving it
-    augroup END
-]])
-
 -- Best to set it here, so that all references to <leader> later on map correctly
 vim.g.mapleader = ","
 
+-- Set the colour scheme
 cmd [[ color moonfly ]]
 
+cmd([[
+    augroup initlua
+        au!
+        au BufWritePost init.lua source <afile>
+    augroup end
+]])
+
 -- Neovim builtin LSP configuration
-require "bsg.lsp"
+require"bsg.lsp"
+
+-- Load the plugins file
+require"plugins"
