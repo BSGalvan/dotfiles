@@ -5,7 +5,6 @@ set autoindent                                 "Turn (auto)indenting ON
 set background=dark                            "Needed for dark bg
 set clipboard=unnamedplus                      "Set clipboard to SYSTEM
 set completeopt=menuone,preview,noselect       "See :h 'cot'
-set encoding=utf-8                             "Set encoding to UTF-8
 set expandtab                                  "Expand <Tab> to spaces
 set foldlevel=99                               "Fold till where?
 set foldmethod=indent                          "Fold at what?
