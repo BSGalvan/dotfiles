@@ -3,6 +3,8 @@
 
 local opt = vim.opt
 
+vim.g.python3_host_prog="/usr/bin/python3"
+
 -- TODO: figure out if this order of wildmode customization
 --       is a conscious choice or not.
 
