@@ -14,19 +14,19 @@ return require('packer').startup({
         use 'wbthomason/packer.nvim'
 
         -- Colorschemes
-        use {
-            'bluz71/vim-moonfly-colors',
-            as = 'moonfly'
-        }
+        use({
+                'bluz71/vim-moonfly-colors',
+                as = 'moonfly',
+                config = {
+                    function()
+                        require"bsg.config.theme"
+                    end
+                }
+        })
 
-        use {
-            'gruvbox-community/gruvbox',
-            as = 'gruvbox'
-        }
-
-        -- Plugin for visible indentlines
-        use 'Yggdroot/indentLine'
-
+        -- Plugin for visible indent levels,
+        -- even on blank lines
+        use 'lukas-reineke/indent-blankline.nvim'
 
         -- Pretty CSS colors
         use {
@@ -112,7 +112,7 @@ return require('packer').startup({
 
         -- Statusline
         use {
-            'hoob3rt/lualine.nvim',
+            'shadmansaleh/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons' }
         }
     end,

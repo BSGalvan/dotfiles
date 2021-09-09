@@ -8,7 +8,8 @@ require("telescope").setup{
     pickers = {
         -- Configure settings for specific pickers
         file_browser = {
-            theme = "ivy"
+            theme = "ivy",
+            hidden = "true"
         }
     }
 }
