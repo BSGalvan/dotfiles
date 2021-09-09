@@ -89,13 +89,9 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/formatter.nvim"
   },
-  gruvbox = {
+  ["indent-blankline.nvim"] = {
     loaded = true,
-    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/gruvbox"
-  },
-  indentLine = {
-    loaded = true,
-    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/indentLine"
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
   },
   lspconfig = {
     loaded = true,
@@ -110,6 +106,7 @@ _G.packer_plugins = {
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
   moonfly = {
+    config = { "\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21bsg.config.theme\frequire\0" },
     loaded = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/moonfly"
   },
@@ -162,6 +159,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: moonfly
+time([[Config for moonfly]], true)
+try_loadstring("\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21bsg.config.theme\frequire\0", "config", "moonfly")
+time([[Config for moonfly]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)

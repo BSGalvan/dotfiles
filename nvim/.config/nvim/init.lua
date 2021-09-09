@@ -12,11 +12,19 @@ end
 -- Best to set it here, so that all references to <leader> later on map correctly
 vim.g.mapleader = ","
 
--- Set the colour scheme
-cmd [[ color moonfly ]]
+-- Disable all builtin plugins not in use.
+require"bsg.disable_builtin"
+
+-- Load the plugins file
+vim.defer_fn(
+    function()
+        require"plugins"
+    end,
+    0
+)
 
 -- Neovim builtin LSP configuration
 require"bsg.lsp"
 
--- Load the plugins file
-require"plugins"
+-- Telescope btw
+require"bsg.telescope"
