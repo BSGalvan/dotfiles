@@ -27,32 +27,29 @@ return require('packer').startup({
         -- Plugin for visible indentlines
         use 'Yggdroot/indentLine'
 
-        -- Note-taking, todo-lists and more!
-        use {
-            'vhyrro/neorg',
-            branch = 'unstable'
-        }
 
-        -- Pretty CSS colors and icons
-        use {
-            'kyazdani42/nvim-web-devicons',
-            as = 'devicons'
-        }
-
+        -- Pretty CSS colors
         use {
             'norcalli/nvim-colorizer.lua',
-            as = 'css-colors'
+            as = 'css-colors',
+            opt = true,
+            cmd = {
+                "ColorizerToggle",
+                "ColorizerAttachToBuffer",
+                "ColorizerDetachFromBuffer",
+                "ColorizerReloadAllBuffers",
+            }
         }
 
         -- Change 'surroundings'
         use 'tpope/vim-surround'
 
-        -- Nifty startup time profile breakdown
+        -- Nifty plugin for startup time profile breakdown
         use {
             'tweekmonster/startuptime.vim',
             as = 'startuptime',
             opt = true,
-            cmd = 'StartupTime'
+            cmd = "StartupTime"
         }
 
         -- Commenting superpowers
@@ -88,20 +85,35 @@ return require('packer').startup({
         use {
             'hrsh7th/nvim-cmp',
             requires = {
-                -- snippet engine
-                'hrsh7th/vim-vsnip',
-                -- lsp-based completion source
-                'hrsh7th/cmp-nvim-lsp'
+                {
+                    -- snippet engine
+                    'hrsh7th/vim-vsnip',
+                },
+                {
+                    -- lsp-based completion source
+                    'hrsh7th/cmp-nvim-lsp',
+                }
             }
         }
 
+        -- Note-taking and more!
+        use { 
+            "vhyrro/neorg",
+            branch = "unstable",
+            requires = "nvim-lua/plenary.nvim"
+        }
+
         -- Code prettification
-        use 'mhartington/formatter.nvim'
+        use {
+            'mhartington/formatter.nvim',
+            opt = true,
+            cmd = "Format"
+        }
 
         -- Statusline
         use {
             'hoob3rt/lualine.nvim',
-            requires = {'kyazdani42/nvim-web-devicons', opt=true}
+            requires = { 'kyazdani42/nvim-web-devicons' }
         }
     end,
     config = {
@@ -112,4 +124,3 @@ return require('packer').startup({
         }
     }
 })
-

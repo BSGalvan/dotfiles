@@ -15,13 +15,6 @@ vim.g.mapleader = ","
 -- Set the colour scheme
 cmd [[ color moonfly ]]
 
-cmd([[
-    augroup initlua
-        au!
-        au BufWritePost init.lua source <afile>
-    augroup end
-]])
-
 -- Neovim builtin LSP configuration
 require"bsg.lsp"
 

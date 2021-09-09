@@ -1,3 +1,7 @@
+if not pcall(require, "formatter") then
+    return
+end
+
 local shfmt = function()
     return {
         exe = "shfmt",

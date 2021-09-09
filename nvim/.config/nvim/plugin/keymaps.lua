@@ -1,5 +1,5 @@
 local map_key = vim.api.nvim_set_keymap
-local opts = { noremap = true , silent = true }
+local opts = { noremap = true }
 
 -- Move to split below / above / left / right
 map_key('n', '<c-j>', '<c-w><c-j>', opts)
@@ -37,11 +37,12 @@ map_key('n', 'te', ':tabedit<Space>', { noremap = true })
 map_key('n', '<Leader>s', ':split<Space>', { noremap = true })
 map_key('n', '<Leader>v', ':vsplit<Space>', { noremap = true })
 
+-- Formatter.nvim specific mappings
+map_key('n', '<F5>', '<cmd>Format<CR>', { noremap = true })
+
 -- Telescope.nvim specific mappings
 map_key('n', '<Space>t', '<cmd>Telescope<CR>', opts)
 map_key('n', '<Space>ff', '<cmd>Telescope find_files<CR>', opts)
 map_key('n', '<Space>fb', '<cmd>Telescope buffers<CR>', opts)
 map_key('n', '<Space>fe', '<cmd>Telescope file_browser<CR>', opts)
-
--- Formatter.nvim specific mappings
-map_key('n', '<F5>', '<cmd>Format<CR>', { noremap = true })
+map_key('n', '<Space>fo', '<cmd>Telescope oldfiles<CR>', opts)

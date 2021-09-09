@@ -44,17 +44,18 @@ opt.listchars = {
     trail = "~"
 }
 
-opt.matchtime=1                                -- Time (in x0.1s) to match parentheses
+opt.matchtime = 1                              -- Time (in 100ms) to match parentheses
+opt.timeoutlen = 500                           -- Time (in ms) to wait for next keypress
 opt.hlsearch = false                           -- Search matches don't persist
 opt.wrap = false                               -- Don't wrap lines
 opt.number = true                              -- Turn on line numbers
 opt.relativenumber = true                      -- Number lines relative to current line
-opt.scrolloff=8                                -- Edge limits beyond which to start scroll
-opt.shiftwidth=4                               -- Number of spaces for (auto)indenting
+opt.scrolloff = 8                                -- Edge limits beyond which to start scroll
+opt.shiftwidth = 4                               -- Number of spaces for (auto)indenting
 opt.showcmd = true                             -- Show (partial) commands in status line
 opt.showmatch = true                           -- Need this to allow parentheses matching
 opt.smartindent = true                         -- Well, indent smartly!
-opt.softtabstop=4                              -- Edit operation <Tab><->space replacement
+opt.softtabstop = 4                              -- Edit operation <Tab><->space replacement
 opt.splitbelow = true                          -- Open new splits below the current buffer
 opt.splitright = true                          -- Open new vsplits right of current buffer
 opt.tabstop=4                                  -- <Tab> = these many spaces
