@@ -57,12 +57,10 @@ return require('packer').startup({
             cmd = "StartupTime",
         }
 
-        -- Commenting superpowers
         use {
-            'winston0410/commented.nvim',
-            config = function()
-                require("config.commented")
-            end
+            'b3nj5m1n/kommentary',
+            opt = true,
+            keys = { "gc", "gcc" }
         }
 
         -- Telescope and dependencies
