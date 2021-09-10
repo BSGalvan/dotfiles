@@ -79,12 +79,14 @@ _G.packer_plugins = {
   },
   ["css-colors"] = {
     commands = { "ColorizerToggle", "ColorizerAttachToBuffer", "ColorizerDetachFromBuffer", "ColorizerReloadAllBuffers" },
+    config = { "\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21config.colorizer\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/css-colors"
   },
   ["formatter.nvim"] = {
     commands = { "Format" },
+    config = { "\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21config.formatter\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/formatter.nvim"
@@ -106,7 +108,7 @@ _G.packer_plugins = {
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
   moonfly = {
-    config = { "\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21bsg.config.theme\frequire\0" },
+    config = { "\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17config.theme\frequire\0" },
     loaded = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/moonfly"
   },
@@ -161,7 +163,7 @@ _G.packer_plugins = {
 time([[Defining packer_plugins]], false)
 -- Config for: moonfly
 time([[Config for moonfly]], true)
-try_loadstring("\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21bsg.config.theme\frequire\0", "config", "moonfly")
+try_loadstring("\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17config.theme\frequire\0", "config", "moonfly")
 time([[Config for moonfly]], false)
 
 -- Command lazy-loads

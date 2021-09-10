@@ -19,7 +19,7 @@ return require('packer').startup({
                 as = 'moonfly',
                 config = {
                     function()
-                        require"bsg.config.theme"
+                        require"config.theme"
                     end
                 }
         })
@@ -38,7 +38,10 @@ return require('packer').startup({
                 "ColorizerAttachToBuffer",
                 "ColorizerDetachFromBuffer",
                 "ColorizerReloadAllBuffers",
-            }
+            },
+            config = function()
+                require("config.colorizer")
+            end,
         }
 
         -- Change 'surroundings'
@@ -48,8 +51,7 @@ return require('packer').startup({
         use {
             'tweekmonster/startuptime.vim',
             as = 'startuptime',
-            opt = true,
-            cmd = "StartupTime"
+            cmd = "StartupTime",
         }
 
         -- Commenting superpowers
@@ -107,7 +109,10 @@ return require('packer').startup({
         use {
             'mhartington/formatter.nvim',
             opt = true,
-            cmd = "Format"
+            cmd = "Format",
+            config = function()
+                require("config.formatter")
+            end
         }
 
         -- Statusline
