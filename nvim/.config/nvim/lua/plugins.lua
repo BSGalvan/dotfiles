@@ -15,18 +15,21 @@ return require('packer').startup({
 
         -- Colorschemes
         use({
-                'bluz71/vim-moonfly-colors',
-                as = 'moonfly',
-                config = {
-                    function()
-                        require"config.theme"
-                    end
-                }
+            'bluz71/vim-moonfly-colors',
+            as = 'moonfly',
+            config = function()
+                require"config.theme"
+            end
         })
 
         -- Plugin for visible indent levels,
         -- even on blank lines
-        use 'lukas-reineke/indent-blankline.nvim'
+        use {
+            'lukas-reineke/indent-blankline.nvim',
+            config = function()
+                require"config.indent-blankline"
+            end
+        }
 
         -- Pretty CSS colors
         use {
@@ -55,8 +58,12 @@ return require('packer').startup({
         }
 
         -- Commenting superpowers
-        use 'winston0410/commented.nvim'
-
+        use {
+            'winston0410/commented.nvim',
+            config = function()
+                require("config.commented")
+            end
+        }
 
         -- Telescope and dependencies
         use {
@@ -67,20 +74,31 @@ return require('packer').startup({
         -- Treesitter and related goodies
         use {
             'nvim-treesitter/nvim-treesitter',
-            run = ':TSUpdate'
+            run = ':TSUpdate',
+            opt = true,
+            event = "BufRead",
+            requires = {
+                {
+                    "nvim-treesitter/playground",
+                    opt = true,
+                    cmd = "TSPlaygroundToggle"
+                }
+            },
+            config = function()
+                require("config.treesitter")
+            end
         }
-
-        use 'nvim-treesitter/playground'
 
         -- LSP stuff - config + install
         use {
             'neovim/nvim-lspconfig',
-            as = 'lspconfig'
-        }
-
-        use {
-            'kabouzeid/nvim-lspinstall',
-            as = 'lspinstall'
+            as = 'lspconfig',
+            requires = {
+                {
+                    "kabouzeid/nvim-lspinstall",
+                    as = 'lspinstall'
+                }
+            },
         }
 
         -- (Auto)Completion
@@ -95,14 +113,21 @@ return require('packer').startup({
                     -- lsp-based completion source
                     'hrsh7th/cmp-nvim-lsp',
                 }
-            }
+            },
+            config = function()
+                require("config.nvim-cmp")
+            end
         }
 
         -- Note-taking and more!
         use { 
             "vhyrro/neorg",
             branch = "unstable",
-            requires = "nvim-lua/plenary.nvim"
+            requires = "nvim-lua/plenary.nvim",
+            after = "nvim-treesitter",
+            config = function()
+                require("config.neorg")
+            end
         }
 
         -- Code prettification
@@ -118,7 +143,10 @@ return require('packer').startup({
         -- Statusline
         use {
             'shadmansaleh/lualine.nvim',
-            requires = { 'kyazdani42/nvim-web-devicons' }
+            requires = { 'kyazdani42/nvim-web-devicons' },
+            config = function()
+                require("config.lualine")
+            end
         }
     end,
     config = {

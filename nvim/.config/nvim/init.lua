@@ -16,6 +16,7 @@ vim.g.mapleader = ","
 require"bsg.disable_builtin"
 
 -- Load the plugins file
+-- no need to load this immediately, since we have packer_compiled
 vim.defer_fn(
     function()
         require"plugins"

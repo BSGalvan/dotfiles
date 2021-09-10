@@ -74,6 +74,7 @@ _G.packer_plugins = {
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
   },
   ["commented.nvim"] = {
+    config = { "\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21config.commented\frequire\0" },
     loaded = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/commented.nvim"
   },
@@ -92,6 +93,7 @@ _G.packer_plugins = {
     path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/formatter.nvim"
   },
   ["indent-blankline.nvim"] = {
+    config = { "\27LJ\1\0027\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\28config.indent-blankline\frequire\0" },
     loaded = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim"
   },
@@ -104,6 +106,7 @@ _G.packer_plugins = {
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/lspinstall"
   },
   ["lualine.nvim"] = {
+    config = { "\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config.lualine\frequire\0" },
     loaded = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
@@ -113,16 +116,25 @@ _G.packer_plugins = {
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/moonfly"
   },
   neorg = {
-    loaded = true,
-    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/neorg"
+    config = { "\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17config.neorg\frequire\0" },
+    load_after = {
+      ["nvim-treesitter"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/neorg"
   },
   ["nvim-cmp"] = {
+    config = { "\27LJ\1\2/\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\20config.nvim-cmp\frequire\0" },
     loaded = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/nvim-cmp"
   },
   ["nvim-treesitter"] = {
-    loaded = true,
-    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
+    after = { "playground", "neorg" },
+    config = { "\27LJ\1\0021\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\22config.treesitter\frequire\0" },
+    loaded = false,
+    needs_bufread = true,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/nvim-treesitter"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
@@ -133,8 +145,13 @@ _G.packer_plugins = {
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/packer.nvim"
   },
   playground = {
-    loaded = true,
-    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/playground"
+    commands = { "TSPlaygroundToggle" },
+    load_after = {
+      ["nvim-treesitter"] = true
+    },
+    loaded = false,
+    needs_bufread = true,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/playground"
   },
   ["plenary.nvim"] = {
     loaded = true,
@@ -165,17 +182,41 @@ time([[Defining packer_plugins]], false)
 time([[Config for moonfly]], true)
 try_loadstring("\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17config.theme\frequire\0", "config", "moonfly")
 time([[Config for moonfly]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config.lualine\frequire\0", "config", "lualine.nvim")
+time([[Config for lualine.nvim]], false)
+-- Config for: commented.nvim
+time([[Config for commented.nvim]], true)
+try_loadstring("\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21config.commented\frequire\0", "config", "commented.nvim")
+time([[Config for commented.nvim]], false)
+-- Config for: indent-blankline.nvim
+time([[Config for indent-blankline.nvim]], true)
+try_loadstring("\27LJ\1\0027\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\28config.indent-blankline\frequire\0", "config", "indent-blankline.nvim")
+time([[Config for indent-blankline.nvim]], false)
+-- Config for: nvim-cmp
+time([[Config for nvim-cmp]], true)
+try_loadstring("\27LJ\1\2/\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\20config.nvim-cmp\frequire\0", "config", "nvim-cmp")
+time([[Config for nvim-cmp]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Format lua require("packer.load")({'formatter.nvim'}, { cmd = "Format", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ColorizerDetachFromBuffer lua require("packer.load")({'css-colors'}, { cmd = "ColorizerDetachFromBuffer", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'startuptime'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ColorizerAttachToBuffer lua require("packer.load")({'css-colors'}, { cmd = "ColorizerAttachToBuffer", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ColorizerToggle lua require("packer.load")({'css-colors'}, { cmd = "ColorizerToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'startuptime'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file TSPlaygroundToggle lua require("packer.load")({'playground'}, { cmd = "TSPlaygroundToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ColorizerReloadAllBuffers lua require("packer.load")({'css-colors'}, { cmd = "ColorizerReloadAllBuffers", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 time([[Defining lazy-load commands]], false)
 
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Event lazy-loads
+time([[Defining lazy-load event autocommands]], true)
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'nvim-treesitter'}, { event = "BufRead *" }, _G.packer_plugins)]]
+time([[Defining lazy-load event autocommands]], false)
+vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
 end)
