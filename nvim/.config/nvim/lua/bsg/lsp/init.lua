@@ -1,4 +1,4 @@
--- Stolen from kabouzeid/dotfiles
+-- Stolen from kabouzeid/dotfiles and the wiki over at neovim/nvim-lspconfig
 -- Configuration for nvim-lspinstall + nvim-lspconfig
 
 -- keymaps
@@ -13,19 +13,18 @@ local on_attach = function(client, bufnr)
 
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
     buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
     buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
     -- Set some keybinds conditional on server capabilities
     -- Do we need this? Can we replicate formatter's capabilities?
@@ -46,14 +45,57 @@ local on_attach = function(client, bufnr)
             augroup END
         ]], false)
     end
+
+    -- Set borders for floating windows
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+        vim.lsp.handlers.hover, {
+            border = 'single'
+        }
+    )
+
+    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
+        vim.lsp.handlers.signatureHelp, {
+            border = 'single'
+        }
+    )
+
+    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next({severity_limit = "Warning", popup_opts = {border = "single"}})<CR>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev({severity_limit = "Warning", popup_opts = {border = "single"}})<CR>', opts)
+
+    -- Change diagnostic symbols in the sign column (gutter)
+    local signs = {
+        Error = " ",
+        Warning = " ",
+        Hint = " ",
+        Information = " "
+    }
+
+    for type, icon in pairs(signs) do
+      local hl = "LspDiagnosticsSign" .. type
+      vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+    end
 end
 
--- config that activates keymaps and enables snippet support
+-- function that activates keymaps and enables snippet support
 local function make_config()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown', 'plaintext' }
     capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.preselectSupport = true
+    capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+    capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+    capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+    capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+    capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+      },
+    }
 
-    capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+    -- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
     return {
       -- enable snippet support; uncomment when you actually need

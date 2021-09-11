@@ -41,8 +41,16 @@ map_key('n', '<Leader>v', ':vsplit<Space>', { noremap = true })
 map_key('n', '<F5>', '<cmd>Format<CR>', { noremap = true })
 
 -- Telescope.nvim specific mappings
-map_key('n', '<Space>t', '<cmd>Telescope<CR>', opts)
-map_key('n', '<Space>ff', '<cmd>Telescope find_files<CR>', opts)
 map_key('n', '<Space>fb', '<cmd>Telescope buffers<CR>', opts)
 map_key('n', '<Space>fe', '<cmd>Telescope file_browser<CR>', opts)
+map_key('n', '<Space>ff', '<cmd>Telescope find_files<CR>', opts)
+map_key('n', '<Space>fh', '<cmd>Telescope help_tags<CR>', opts)
 map_key('n', '<Space>fo', '<cmd>Telescope oldfiles<CR>', opts)
+map_key('n', '<Space>fz', '<cmd>Telescope current_buffer_fuzzy_find<CR>', opts)
+map_key('n', '<Space>t', '<cmd>Telescope<CR>', opts)
+
+-- Sniprun specific mappings
+map_key('v', 'f', '<Plug>SnipRun', {silent = true})
+map_key('n', '<leader>f', '<Plug>SnipRunOperator', {silent = true})
+map_key('n', '<leader>ff', '<Plug>SnipRun', {silent = true})
+map_key('n', '<leader>fc', '<Plug>SnipClose', {silent = true})

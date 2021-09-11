@@ -4,10 +4,12 @@ end
 
 require'colorizer'.setup(
     {
-        '*'; -- Highlight all files
-        css = { css = true; }; -- Enable parsing rgb(...) functions in css.
+        -- Highlight all files
+        '*'; 
+        -- Enable parsing rgb(...) functions in css.
+        css = { css = true; };
     },
     {
-        mode = 'foreground' 
+        mode = 'background' 
     }
 )

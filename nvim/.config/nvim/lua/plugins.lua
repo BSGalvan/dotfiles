@@ -1,8 +1,10 @@
--- Autocmd to compile plugins upon changing plugins.lua
+-- Autocmd to compile plugins (with profiling) upon changing plugins.lua
+-- Use <cmd>PackerProfile to see profiling results
+
 vim.cmd([[
     augroup packer_user_config
         autocmd!
-        autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+        autocmd BufWritePost plugins.lua source <afile> | PackerCompile profile=true
     augroup end
 ]])
 
@@ -75,13 +77,7 @@ return require('packer').startup({
             run = ':TSUpdate',
             opt = true,
             event = "BufRead",
-            requires = {
-                {
-                    "nvim-treesitter/playground",
-                    opt = true,
-                    cmd = "TSPlaygroundToggle"
-                }
-            },
+            requires = "nvim-treesitter/playground",
             config = function()
                 require("config.treesitter")
             end
@@ -99,22 +95,55 @@ return require('packer').startup({
             },
         }
 
+        -- lsp-powered signatures while you type!
+        use {
+            "ray-x/lsp_signature.nvim",
+            config = function()
+                require("config.lsp_signature")
+            end
+        }
+
+        -- lots of snippets
+        use {
+            "rafamadriz/friendly-snippets",
+            event = "InsertEnter"
+        }
+
+        -- snippet engine
+        use {
+            'L3MON4D3/LuaSnip',
+            requires = "friendly-snippets",
+            after = "friendly-snippets",
+            config = function()
+                require("config.snippets")
+            end
+        }
+
         -- (Auto)Completion
         use {
             'hrsh7th/nvim-cmp',
-            requires = {
-                {
-                    -- snippet engine
-                    'hrsh7th/vim-vsnip',
-                },
-                {
-                    -- lsp-based completion source
-                    'hrsh7th/cmp-nvim-lsp',
-                }
-            },
+            after = "LuaSnip",
             config = function()
                 require("config.nvim-cmp")
             end
+        }
+
+        -- luasnip snippet source for nvim-cmp
+        use {
+            "saadparwaiz1/cmp_luasnip",
+            after = "LuaSnip"
+        }
+
+        -- neovim lua API completion source for cmp
+        use {
+              "hrsh7th/cmp-nvim-lua",
+              after = "cmp_luasnip",
+           }
+
+        -- nvim-cmp completion source for lsp
+        use { 
+            'hrsh7th/cmp-nvim-lsp',
+            after = "cmp-nvim-lua",
         }
 
         -- Note-taking and more!
@@ -122,7 +151,10 @@ return require('packer').startup({
             "vhyrro/neorg",
             branch = "unstable",
             requires = "nvim-lua/plenary.nvim",
-            after = "nvim-treesitter",
+            after = { 
+                "nvim-treesitter",
+                "nvim-cmp"
+            },
             config = function()
                 require("config.neorg")
             end
@@ -146,11 +178,36 @@ return require('packer').startup({
                 require("config.lualine")
             end
         }
+
+        -- smooth scrolling
+        use {
+            'karb94/neoscroll.nvim',
+            opt = true,
+            keys = {
+                "<c-d>", "<c-u>",
+                "<c-b>", "<c-f>",
+                "<c-e>", "<c-y>",
+                "zt", "zz", "zb"
+            },
+            config = function()
+                require("config.neoscroll")
+            end
+        }
+
+        -- run snippets of code and get outputs, a la Hydrogen
+        -- No more jupyter-notebooks!
+        use {
+            'michaelb/sniprun',
+            run = "bash ./install.sh",
+            config = function()
+                require("config.sniprun")
+            end
+        }
     end,
     config = {
         display = {
             open_fn = function()
-                return require('packer.util').float({ border = 'single' })
+                return require('packer.util').float({ border = 'double' })
             end
         }
     }

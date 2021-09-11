@@ -11,7 +11,7 @@ local no_errors, error_msg = pcall(function()
 
   local time
   local profile_info
-  local should_profile = false
+  local should_profile = true
   if should_profile then
     local hrtime = vim.loop.hrtime
     profile_info = {}
@@ -69,9 +69,44 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  LuaSnip = {
+    after = { "nvim-cmp", "cmp_luasnip" },
+    config = { "\27LJ\1\2/\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\20config.snippets\frequire\0" },
+    load_after = {
+      ["friendly-snippets"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/LuaSnip"
+  },
   ["cmp-nvim-lsp"] = {
-    loaded = true,
-    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp"
+    after_files = { "/home/bsg/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua" },
+    load_after = {
+      ["cmp-nvim-lua"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp"
+  },
+  ["cmp-nvim-lua"] = {
+    after = { "cmp-nvim-lsp" },
+    after_files = { "/home/bsg/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lua/after/plugin/cmp_nvim_lua.lua" },
+    load_after = {
+      cmp_luasnip = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lua"
+  },
+  cmp_luasnip = {
+    after = { "cmp-nvim-lua" },
+    after_files = { "/home/bsg/.local/share/nvim/site/pack/packer/opt/cmp_luasnip/after/plugin/cmp_luasnip.lua" },
+    load_after = {
+      LuaSnip = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/cmp_luasnip"
   },
   ["css-colors"] = {
     commands = { "ColorizerToggle", "ColorizerAttachToBuffer", "ColorizerDetachFromBuffer", "ColorizerReloadAllBuffers" },
@@ -87,6 +122,12 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/formatter.nvim"
   },
+  ["friendly-snippets"] = {
+    after = { "LuaSnip" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/friendly-snippets"
+  },
   ["indent-blankline.nvim"] = {
     config = { "\27LJ\1\0027\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\28config.indent-blankline\frequire\0" },
     loaded = true,
@@ -97,6 +138,11 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/kommentary"
+  },
+  ["lsp_signature.nvim"] = {
+    config = { "\27LJ\1\0024\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\25config.lsp_signature\frequire\0" },
+    loaded = true,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim"
   },
   lspconfig = {
     loaded = true,
@@ -119,16 +165,29 @@ _G.packer_plugins = {
   neorg = {
     config = { "\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17config.neorg\frequire\0" },
     load_after = {
+      ["nvim-cmp"] = true,
       ["nvim-treesitter"] = true
     },
     loaded = false,
     needs_bufread = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/neorg"
   },
+  ["neoscroll.nvim"] = {
+    config = { "\27LJ\1\0020\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\21config.neoscroll\frequire\0" },
+    keys = { { "", "<c-d>" }, { "", "<c-u>" }, { "", "<c-b>" }, { "", "<c-f>" }, { "", "<c-e>" }, { "", "<c-y>" }, { "", "zt" }, { "", "zz" }, { "", "zb" } },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/neoscroll.nvim"
+  },
   ["nvim-cmp"] = {
+    after = { "neorg" },
     config = { "\27LJ\1\2/\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\20config.nvim-cmp\frequire\0" },
-    loaded = true,
-    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/nvim-cmp"
+    load_after = {
+      LuaSnip = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/opt/nvim-cmp"
   },
   ["nvim-treesitter"] = {
     after = { "playground", "neorg" },
@@ -146,7 +205,6 @@ _G.packer_plugins = {
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/packer.nvim"
   },
   playground = {
-    commands = { "TSPlaygroundToggle" },
     load_after = {
       ["nvim-treesitter"] = true
     },
@@ -157,6 +215,11 @@ _G.packer_plugins = {
   ["plenary.nvim"] = {
     loaded = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+  },
+  sniprun = {
+    config = { "\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config.sniprun\frequire\0" },
+    loaded = true,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/sniprun"
   },
   startuptime = {
     commands = { "StartupTime" },
@@ -171,52 +234,61 @@ _G.packer_plugins = {
   ["vim-surround"] = {
     loaded = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/vim-surround"
-  },
-  ["vim-vsnip"] = {
-    loaded = true,
-    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/vim-vsnip"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: lualine.nvim
-time([[Config for lualine.nvim]], true)
-try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config.lualine\frequire\0", "config", "lualine.nvim")
-time([[Config for lualine.nvim]], false)
--- Config for: indent-blankline.nvim
-time([[Config for indent-blankline.nvim]], true)
-try_loadstring("\27LJ\1\0027\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\28config.indent-blankline\frequire\0", "config", "indent-blankline.nvim")
-time([[Config for indent-blankline.nvim]], false)
--- Config for: nvim-cmp
-time([[Config for nvim-cmp]], true)
-try_loadstring("\27LJ\1\2/\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\20config.nvim-cmp\frequire\0", "config", "nvim-cmp")
-time([[Config for nvim-cmp]], false)
+-- Config for: lsp_signature.nvim
+time([[Config for lsp_signature.nvim]], true)
+try_loadstring("\27LJ\1\0024\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\25config.lsp_signature\frequire\0", "config", "lsp_signature.nvim")
+time([[Config for lsp_signature.nvim]], false)
 -- Config for: moonfly
 time([[Config for moonfly]], true)
 try_loadstring("\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17config.theme\frequire\0", "config", "moonfly")
 time([[Config for moonfly]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config.lualine\frequire\0", "config", "lualine.nvim")
+time([[Config for lualine.nvim]], false)
+-- Config for: sniprun
+time([[Config for sniprun]], true)
+try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config.sniprun\frequire\0", "config", "sniprun")
+time([[Config for sniprun]], false)
+-- Config for: indent-blankline.nvim
+time([[Config for indent-blankline.nvim]], true)
+try_loadstring("\27LJ\1\0027\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\28config.indent-blankline\frequire\0", "config", "indent-blankline.nvim")
+time([[Config for indent-blankline.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Format lua require("packer.load")({'formatter.nvim'}, { cmd = "Format", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'startuptime'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ColorizerDetachFromBuffer lua require("packer.load")({'css-colors'}, { cmd = "ColorizerDetachFromBuffer", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file TSPlaygroundToggle lua require("packer.load")({'playground'}, { cmd = "TSPlaygroundToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ColorizerAttachToBuffer lua require("packer.load")({'css-colors'}, { cmd = "ColorizerAttachToBuffer", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ColorizerToggle lua require("packer.load")({'css-colors'}, { cmd = "ColorizerToggle", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file StartupTime lua require("packer.load")({'startuptime'}, { cmd = "StartupTime", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Format lua require("packer.load")({'formatter.nvim'}, { cmd = "Format", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file ColorizerReloadAllBuffers lua require("packer.load")({'css-colors'}, { cmd = "ColorizerReloadAllBuffers", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]])
 time([[Defining lazy-load commands]], false)
 
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
 vim.cmd [[noremap <silent> gcc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gcc", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> zb <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "zb", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <c-y> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-y>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <c-d> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-d>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> zt <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "zt", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <c-f> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-f>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <c-b> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-b>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <c-u> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-u>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> zz <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "zz", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <c-e> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-e>", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'friendly-snippets'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au BufRead * ++once lua require("packer.load")({'nvim-treesitter'}, { event = "BufRead *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")

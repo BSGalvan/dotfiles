@@ -16,40 +16,20 @@ opt.wildmode = { "longest", "full" }
 
 -- Cool floating window popup menu for completion on the command line
 opt.pumblend = 15
-
 opt.wildoptions = "pum"
 
+opt.autochdir = true                           -- Automove to buffer's directory
 opt.autoindent = true                          -- Turn (auto)indenting ON
 opt.background = "dark"                        -- Needed for dark bg
 opt.clipboard = "unnamedplus"                  -- Set clipboard to SYSTEM
-
--- See :h 'cot'
-opt.completeopt = {
-    'menuone',
-    'preview',
-    'noselect'
-}
-
-opt.autochdir = true                           -- Automove to buffer's directory
-opt.formatoptions:remove({ 'c', 'r', 'o' })    -- Stop autocommenting!
 opt.expandtab = true                           -- Expand <Tab> to spaces
 opt.foldlevel = 99                             -- Fold till where?
 opt.foldmethod = "indent"                      -- Fold at what?
 opt.guicursor = ""                             -- Turn off mode-based cursor
 opt.hidden = true                              -- Allow buffer navigation w/o saving
-opt.incsearch = true                           -- Highlight matches incrementally
-
--- How do I reveal whitespace characters?
-opt.listchars = {
-    eol = "﬋",
-    tab = ">·",
-    trail = "~"
-}
-
-opt.matchtime = 1                              -- Time (in 100ms) to match parentheses
-opt.timeoutlen = 500                           -- Time (in ms) to wait for next keypress
 opt.hlsearch = false                           -- Search matches don't persist
-opt.wrap = false                               -- Don't wrap lines
+opt.incsearch = true                           -- Highlight matches incrementally
+opt.matchtime = 1                              -- Time (in 100ms) to match parentheses
 opt.number = true                              -- Turn on line numbers
 opt.relativenumber = true                      -- Number lines relative to current line
 opt.scrolloff = 8                                -- Edge limits beyond which to start scroll
@@ -62,3 +42,30 @@ opt.splitbelow = true                          -- Open new splits below the curr
 opt.splitright = true                          -- Open new vsplits right of current buffer
 opt.tabstop=4                                  -- <Tab> = these many spaces
 opt.termguicolors = true                       -- Enable 24-bit RGB colorspace
+opt.timeoutlen = 500                           -- Time (in ms) to wait for next keypress
+opt.wrap = false                               -- Don't wrap lines
+
+opt.formatoptions = opt.formatoptions
+  - "a" -- Auto formatting is BAD.
+  - "t" -- Don't auto format my code. I got linters for that.
+  + "c" -- In general, I like it when comments respect textwidth
+  + "q" -- Allow formatting comments w/ gq
+  - "o" -- O and o, don't continue comments
+  - "r" -- And don't continue when pressing enter.
+  + "n" -- Indent past the formatlistpat, not underneath it.
+  + "j" -- Auto-remove comments if possible.
+  - "2" -- I'm not in gradeschool anymore
+
+-- How do I reveal whitespace characters?
+opt.listchars = {
+    eol = "↲",
+    tab = ">·",
+    trail = "~"
+}
+
+-- See :h 'cot'
+opt.completeopt = {
+    'menuone',
+    'preview',
+    'noselect'
+}

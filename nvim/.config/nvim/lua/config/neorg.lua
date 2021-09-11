@@ -1,4 +1,4 @@
-if not pcall(require, "neorg") then
+if not pcall(require, "nvim-cmp") then
     return
 end
 
