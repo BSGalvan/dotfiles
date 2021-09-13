@@ -13,10 +13,10 @@ set font "JuliaMono 12"
 
 map - zoom out
 map = zoom in
-map R rotate
 map d scroll half-down
 map i recolor
 map r reload
+map R rotate
 map u scroll half-up
 map w zoom width
 

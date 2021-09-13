@@ -4,10 +4,10 @@
 require("sniprun").setup {
   -- Check :SnipInfo and :h sniprun for more info
   -- use these instead of the default for the current filetype
-  selected_interpreters = { "python3_fifo" },
+  selected_interpreters = {},
 
   -- enable REPL-like behavior for the given interpreters
-  repl_enable = { "python3_fifo" },
+  repl_enable = {},
 
   -- disable REPL-like behavior for the given interpreters
   repl_disable = {},

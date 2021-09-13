@@ -6,7 +6,7 @@ local shfmt = function()
   }
 end
 
-require("formatter").setup {
+require("formatter").setup({
   filetype = {
     c = {
       -- astyle format
@@ -20,5 +20,33 @@ require("formatter").setup {
     },
     bash = { shfmt },
     sh = { shfmt },
+    python = {
+      function()
+        return {
+          exe = "black",
+          -- require the - to indicate that inputs are from stdin
+          args = { "-" },
+          stdin = true,
+        }
+      end,
+    },
+    lua = {
+      function()
+        return {
+          exe = "stylua",
+          args = { "--indent-type=Spaces --indent-width=2 - " },
+          stdin = true,
+        }
+      end,
+    },
+    rust = {
+      function()
+        return {
+          exe = "rustfmt",
+          args = { "--emit=stdout" },
+          stdin = true,
+        }
+      end,
+    },
   },
-}
+})
