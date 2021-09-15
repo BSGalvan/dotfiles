@@ -156,6 +156,29 @@ return require("packer").startup({
       end,
     })
 
+    -- Note-taking and more!
+    use({
+      "kristijanhusak/orgmode.nvim",
+      branch = "tree-sitter",
+      requires = {
+        {
+          "akinsho/org-bullets.nvim",
+          config = function()
+            require("config.org-bullets")
+          end,
+        },
+        {
+          "lukas-reineke/headlines.nvim",
+          config = function()
+            require("headlines").setup()
+          end,
+        },
+      },
+      config = function()
+        require("config.orgmode")
+      end,
+    })
+
     -- Statusline
     use({
       "shadmansaleh/lualine.nvim",
