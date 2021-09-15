@@ -174,8 +174,9 @@ return require("packer").startup({
           end,
         },
       },
+      after = "nvim-treesitter",
       config = function()
-        require("config.orgmode")
+        require("orgmode").setup()
       end,
     })
 
