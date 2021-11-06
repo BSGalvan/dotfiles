@@ -16,58 +16,32 @@ bindkey -v
 # ---------------------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------------------
-# Declaring stuff for zinit
+# Declaring stuff for rossmacarthur/sheldon
 # Note: this section should come before compinit, so that completions are properly
 #       initialized.
+# TODO: bootstrap sheldon's installation, along with LS_COLORS install!
+# Step 1.) Download the prebuilt binary for the host architecture
 
-declare -A ZINIT
+export SHELDON_INSTALL_DIR="$HOME/.local/bin"
+curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
+    | bash -s -- --repo rossmacarthur/sheldon --to "$SHELDON_INSTALL_DIR"
 
-export ZINIT[HOME_DIR]="${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
-export ZINIT[BIN_DIR]="${ZINIT[HOME_DIR]}/bin"
-export ZINIT[PLUGINS_DIR]="${ZINIT[HOME_DIR]}/plugins"
-export ZINIT[COMPLETIONS_DIR]="${ZINIT[HOME_DIR]}/completions"
-export ZINIT[SNIPPETS_DIR]="${ZINIT[HOME_DIR]}/snippets"
-export ZINIT[ZCOMPDUMP_PATH]="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+# Step 2.) Now that you have the binary, remember to get the plugins.toml file from
+#          BSGalvan/dotfiles! Then the next two lines will setup all the required plugins
+export SHELDON_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sheldon"
+eval "$(sheldon source)"
 
-# Bootstrapping the installation of zinit, so that I don't have to install it by hand
-# Step 1.) Create the top-level directory if it doesn't exist
+# Step 3.) Download trapd00r/LS_COLORS. This creates a lscolors.(c)sh in
+#          $XDG_DATA_HOME
+mkdir /tmp/LS_COLORS && 
+    curl -L https://api.github.com/repos/trapd00r/LS_COLORS/tarball/master |
+    tar xzf - --directory=/tmp/LS_COLORS --strip=1
 
-[[ ! -d ${ZINIT[HOME_DIR]} ]] &&
-    mkdir -p ${ZINIT[HOME_DIR]}
+( cd /tmp/LS_COLORS && sh install.sh 2>/dev/null 1>&2 )
 
-# Step 2.) Clone the repo if it doesn't exist
+# Step 4.) Enable LS_COLORS!
+source "${XDG_DATA_HOME:-$HOME/.local/share}/lscolors.sh"
 
-[[ ! -d ${ZINIT[BIN_DIR]} ]] &&
-    git clone https://github.com/zdharma/zinit.git ${ZINIT[BIN_DIR]}
-
-# Step 3.) Finish by sourcing. All the plugins will be installed as well.
-source "${ZINIT[BIN_DIR]}/zinit.zsh"
-
-# Note: These lines set up completion for `zinit`, and are needed only if
-#       you source the zinit.zsh file after compinit
-#  autoload -Uz _zinit
-#  (( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Note: lucid     => don't present 'Loaded <plugin>' prompt
-#       wait'!n'  => defer plugin loading till n ms (>~ 1ms) after loading zshrc
-#                    and ! reloads the prompt
-zinit wait'!1' lucid light-mode for \
-    esc/conda-zsh-completion \
-    OMZ::plugins/timer/timer.plugin.zsh \
-    pick"z.sh" \
-        rupa/z
-
-zinit lucid light-mode for \
-    zdharma/fast-syntax-highlighting \
-    depth"1" pick"gitstatus.prompt.zsh" \
-        romkatv/gitstatus
-
-zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-    atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-    atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-zinit light trapd00r/LS_COLORS
-
-# End of zinit declarations
 # ---------------------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------------------
@@ -78,7 +52,6 @@ zstyle ':completion:*' completer _expand _complete _ignored _approximate
 zstyle ':completion:*' expand prefix
 zstyle ':completion:*' file-sort name
 zstyle ':completion:*' insert-unambiguous true
-#  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' list-suffixes true
 zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' \
@@ -151,6 +124,8 @@ _fix_cursor() {
 export PROMPT="%(?..%F{1}💀%?%f)%F{2}%3~%f %F{200}%#%f "
 export RPROMPT='$GITSTATUS_PROMPT'
 
+## A function for easily sampling zsh startup times
+
 timezsh() {
   shell=${1-$SHELL}
   for i in $(seq 1 10); do time $shell -i -c exit; done
@@ -177,6 +152,7 @@ done
 
 # Colorize man pages using bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 
 # End of Compartmentalized Personalization
 # ---------------------------------------------------------------------------------------
