@@ -38,7 +38,7 @@ map_key("n", "<Leader>s", ":split<Space>", { noremap = true })
 map_key("n", "<Leader>v", ":vsplit<Space>", { noremap = true })
 
 -- Formatter.nvim specific mappings
-map_key("n", "<F5>", "<cmd>Format<CR>", { noremap = true })
+-- map_key("n", "<F5>", "<cmd>Format<CR>", { noremap = true })
 
 -- Telescope.nvim specific mappings
 map_key("n", "<Space>fb", "<cmd>Telescope buffers<CR>", opts)

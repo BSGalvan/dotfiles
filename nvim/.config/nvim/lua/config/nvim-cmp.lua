@@ -1,8 +1,8 @@
 -- nvim-cmp setup
-local cmp = require "cmp"
-local luasnip = require "luasnip"
+local cmp = require("cmp")
+local luasnip = require("luasnip")
 
-cmp.setup {
+cmp.setup({
   snippet = {
     expand = function(args)
       require("luasnip").lsp_expand(args.body)
@@ -15,10 +15,10 @@ cmp.setup {
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
-    ["<CR>"] = cmp.mapping.confirm {
+    ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
-    },
+    }),
     ["<Tab>"] = cmp.mapping(function(fallback)
       if vim.fn.pumvisible() == 1 then
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-n>", true, true, true), "n")
@@ -51,6 +51,7 @@ cmp.setup {
   sources = {
     { name = "nvim_lsp" },
     { name = "luasnip" },
+    { name = "buffer" },
     { name = "orgmode" },
   },
-}
+})
