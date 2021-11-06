@@ -20,9 +20,10 @@ bindkey -v
 # Note: this section should come before compinit, so that completions are properly
 #       initialized.
 # TODO: bootstrap sheldon's installation, along with LS_COLORS install!
-# Step 1.) Download the prebuilt binary for the host architecture
+# Step 1.) Download the prebuilt binary for the host architecture, if it doesn't exist
 
 export SHELDON_INSTALL_DIR="$HOME/.local/bin"
+[[ ! -f "$SHELDON_INSTALL_DIR/sheldon" ]] &&
 curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
     | bash -s -- --repo rossmacarthur/sheldon --to "$SHELDON_INSTALL_DIR"
 
@@ -31,13 +32,14 @@ curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
 export SHELDON_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/sheldon"
 eval "$(sheldon source)"
 
-# Step 3.) Download trapd00r/LS_COLORS. This creates a lscolors.(c)sh in
-#          $XDG_DATA_HOME
-mkdir /tmp/LS_COLORS && 
+# Step 3.) Clone trapd00r/LS_COLORS and install a lscolors.(c)sh in
+#          $XDG_DATA_HOME if it doesn't exist.
+[[ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/lscolors.sh" ]] &&
+mkdir /tmp/LS_COLORS &&
     curl -L https://api.github.com/repos/trapd00r/LS_COLORS/tarball/master |
-    tar xzf - --directory=/tmp/LS_COLORS --strip=1
-
-( cd /tmp/LS_COLORS && sh install.sh 2>/dev/null 1>&2 )
+    tar xzf - --directory=/tmp/LS_COLORS --strip=1 &&
+    cd /tmp/LS_COLORS && 
+    sh install.sh 2>/dev/null 1>&2
 
 # Step 4.) Enable LS_COLORS!
 source "${XDG_DATA_HOME:-$HOME/.local/share}/lscolors.sh"
