@@ -2,6 +2,8 @@
 
 Mostly a note to self, in case I hit my head someday.
 
+![Gentoo Rice](https://github.com/BSGalvan/dotfiles/blob/master/desktop.png)
+
 ## Installation & Usage
 
 This dotfiles repo is managed using [GNU stow](https://www.gnu.org/software/stow/).
