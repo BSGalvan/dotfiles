@@ -68,7 +68,16 @@ return require("packer").startup({
     -- Telescope and dependencies
     use({
       "nvim-telescope/telescope.nvim",
-      requires = { "nvim-lua/plenary.nvim" },
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-lua/popup.nvim",
+      },
+    })
+
+    -- Telescope extension for better sorting
+    use({
+      "nvim-telescope/telescope-fzf-native.nvim",
+      run = "make",
     })
 
     -- Treesitter and related goodies
@@ -146,11 +155,17 @@ return require("packer").startup({
       after = "cmp-nvim-lua",
     })
 
+    -- nvim-cmp completion source for buffers
+    use({
+      "hrsh7th/cmp-buffer",
+      after = "cmp-nvim-lsp",
+    })
+
     -- Code prettification
     use({
       "mhartington/formatter.nvim",
       opt = true,
-      cmd = "Format",
+      event = "BufWritePost",
       config = function()
         require("config.formatter")
       end,
@@ -182,7 +197,7 @@ return require("packer").startup({
 
     -- Statusline
     use({
-      "shadmansaleh/lualine.nvim",
+      "nvim-lualine/lualine.nvim",
       requires = { "kyazdani42/nvim-web-devicons" },
       config = function()
         require("config.lualine")
@@ -216,6 +231,19 @@ return require("packer").startup({
       run = "bash ./install.sh",
       config = function()
         require("config.sniprun")
+      end,
+    })
+
+    -- Interactive neovim scratchpad for Lua!
+    use({
+      "rafcamlet/nvim-luapad",
+      opt = true,
+      cmd = {
+        "Luapad",
+        "LuaRun",
+      },
+      config = function()
+        require("luapad").init()
       end,
     })
   end,
