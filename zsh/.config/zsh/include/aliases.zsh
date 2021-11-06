@@ -40,11 +40,14 @@ alias \
     lt="ls -ltFh"
 
 # Shortcuts for generally long commands
+# Also include more verbose, friendly versions of mv and rm
 alias \
     bc="bc -ql" \
     cat="bat" \
     md="mkdir" \
     pipes="pipes.sh -t 1 -p 7 -ccccccc 1 2 3 4 5 6 7" \
+    mv="mv -v" \
+    rm="rm -i" \
     xbk="xbindkeys -f $XBINDKEYSRC --poll-rc" \
     def="dict -d gcide" \
     todo='nvim -c "lcd ~/neorg"' 
@@ -54,6 +57,7 @@ alias \
     gitP="git push" \
     gita="git add" \
     gitc="git commit" \
+    gitd="git diff" \
     gitp="git pull" \
     gits="git status" \
     gitl="git log --graph --full-history --all --pretty=format:"%h%x09%d%x20%s""
