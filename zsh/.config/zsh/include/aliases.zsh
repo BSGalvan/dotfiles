@@ -64,5 +64,5 @@ alias \
 
 # Shortcuts for the ytdl family
 alias \
-    ytdla="youtube-dl -x --audio-format vorbis -o '%(title)s.%(ext)s'" \
-    ytdlp="youtube-dl -x --audio-format vorbis -o '%(playlist_index)02d %(track)s.%(ext)s'"
+    ytdla="yt-dlp -x --audio-format vorbis -o '%(title)s.%(ext)s'" \
+    ytdlp="yt-dlp -x --audio-format vorbis -o '%(playlist_index)02d %(track)s.%(ext)s'"
