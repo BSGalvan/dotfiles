@@ -173,25 +173,9 @@ return require("packer").startup({
 
     -- Note-taking and more!
     use({
-      "kristijanhusak/orgmode.nvim",
-      branch = "tree-sitter",
-      requires = {
-        {
-          "akinsho/org-bullets.nvim",
-          config = function()
-            require("config.org-bullets")
-          end,
-        },
-        {
-          "lukas-reineke/headlines.nvim",
-          config = function()
-            require("headlines").setup()
-          end,
-        },
-      },
-      after = "nvim-treesitter",
+      "lukas-reineke/headlines.nvim",
       config = function()
-        require("orgmode").setup()
+        require("headlines").setup()
       end,
     })
 
@@ -224,16 +208,6 @@ return require("packer").startup({
       end,
     })
 
-    -- run snippets of code and get outputs, a la Hydrogen
-    -- No more jupyter-notebooks!
-    use({
-      "michaelb/sniprun",
-      run = "bash ./install.sh",
-      config = function()
-        require("config.sniprun")
-      end,
-    })
-
     -- Interactive neovim scratchpad for Lua!
     use({
       "rafcamlet/nvim-luapad",
@@ -245,6 +219,11 @@ return require("packer").startup({
       config = function()
         require("luapad").init()
       end,
+    })
+
+    use({
+      "vimwiki/vimwiki",
+      branch = "dev",
     })
   end,
   config = {
