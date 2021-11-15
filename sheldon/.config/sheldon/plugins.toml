@@ -22,7 +22,6 @@ shell = "zsh"
 
     [plugins.conda-completion]
         github = 'esc/conda-zsh-completion'
-        apply = ["defer"]
 
     [plugins.fz]
         github = 'changyuheng/fz'
