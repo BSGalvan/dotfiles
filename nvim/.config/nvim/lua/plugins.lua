@@ -224,6 +224,9 @@ return require("packer").startup({
     use({
       "vimwiki/vimwiki",
       branch = "dev",
+      config = function()
+          require("config.wiki")
+      end
     })
   end,
   config = {
