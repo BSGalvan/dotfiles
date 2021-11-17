@@ -222,11 +222,13 @@ return require("packer").startup({
     })
 
     use({
-      "vimwiki/vimwiki",
-      branch = "dev",
+      "jakewvincent/mkdnflow.nvim",
       config = function()
-          require("config.wiki")
-      end
+        require("mkdnflow").setup({
+          evaluate_prefix = false,
+          new_file_prefix = [[]],
+        })
+      end,
     })
   end,
   config = {

@@ -11,7 +11,7 @@ local no_errors, error_msg = pcall(function()
 
   local time
   local profile_info
-  local should_profile = false
+  local should_profile = true
   if should_profile then
     local hrtime = vim.loop.hrtime
     profile_info = {}
@@ -190,6 +190,12 @@ _G.packer_plugins = {
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
+  ["mkdnflow.nvim"] = {
+    config = { "\27LJ\1\2_\0\0\2\0\4\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0>\0\2\1G\0\1\0\1\0\2\20new_file_prefix\5\20evaluate_prefix\1\nsetup\rmkdnflow\frequire\0" },
+    loaded = true,
+    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/mkdnflow.nvim",
+    url = "https://github.com/jakewvincent/mkdnflow.nvim"
+  },
   moonfly = {
     config = { "\27LJ\1\2,\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\17config.theme\frequire\0" },
     loaded = true,
@@ -284,12 +290,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/bsg/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
-  },
-  vimwiki = {
-    config = { "\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16config.wiki\frequire\0" },
-    loaded = true,
-    path = "/home/bsg/.local/share/nvim/site/pack/packer/start/vimwiki",
-    url = "https://github.com/vimwiki/vimwiki"
   }
 }
 
@@ -306,14 +306,14 @@ time([[Config for moonfly]], false)
 time([[Config for lualine.nvim]], true)
 try_loadstring("\27LJ\1\2.\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\19config.lualine\frequire\0", "config", "lualine.nvim")
 time([[Config for lualine.nvim]], false)
--- Config for: vimwiki
-time([[Config for vimwiki]], true)
-try_loadstring("\27LJ\1\2+\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\16config.wiki\frequire\0", "config", "vimwiki")
-time([[Config for vimwiki]], false)
 -- Config for: indent-blankline.nvim
 time([[Config for indent-blankline.nvim]], true)
 try_loadstring("\27LJ\1\0027\0\0\2\0\2\0\0044\0\0\0%\1\1\0>\0\2\1G\0\1\0\28config.indent-blankline\frequire\0", "config", "indent-blankline.nvim")
 time([[Config for indent-blankline.nvim]], false)
+-- Config for: mkdnflow.nvim
+time([[Config for mkdnflow.nvim]], true)
+try_loadstring("\27LJ\1\2_\0\0\2\0\4\0\a4\0\0\0%\1\1\0>\0\2\0027\0\2\0003\1\3\0>\0\2\1G\0\1\0\1\0\2\20new_file_prefix\5\20evaluate_prefix\1\nsetup\rmkdnflow\frequire\0", "config", "mkdnflow.nvim")
+time([[Config for mkdnflow.nvim]], false)
 -- Config for: headlines.nvim
 time([[Config for headlines.nvim]], true)
 try_loadstring("\27LJ\1\0027\0\0\2\0\3\0\0064\0\0\0%\1\1\0>\0\2\0027\0\2\0>\0\1\1G\0\1\0\nsetup\14headlines\frequire\0", "config", "headlines.nvim")
@@ -335,14 +335,14 @@ time([[Defining lazy-load keymaps]], true)
 vim.cmd [[noremap <silent> <c-d> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-d>", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <c-y> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-y>", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <c-u> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-u>", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <c-f> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-f>", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> zz <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "zz", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> gcc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gcc", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> zt <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "zt", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> zb <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "zb", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[noremap <silent> <c-b> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-b>", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> <c-e> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-e>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> zz <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "zz", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <c-b> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-b>", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gcc <cmd>lua require("packer.load")({'kommentary'}, { keys = "gcc", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> <c-f> <cmd>lua require("packer.load")({'neoscroll.nvim'}, { keys = "<lt>c-f>", prefix = "" }, _G.packer_plugins)<cr>]]
 time([[Defining lazy-load keymaps]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
