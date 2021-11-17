@@ -221,15 +221,14 @@ return require("packer").startup({
       end,
     })
 
+    -- A simpler version of vimwiki, but it's all lua!
     use({
       "jakewvincent/mkdnflow.nvim",
       config = function()
-        require("mkdnflow").setup({
-          evaluate_prefix = false,
-          new_file_prefix = [[]],
-        })
+        require("config.mkdnflow")
       end,
     })
+
   end,
   config = {
     display = {
