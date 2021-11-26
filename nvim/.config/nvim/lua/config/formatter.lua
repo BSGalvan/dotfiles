@@ -1,11 +1,3 @@
-local shfmt = function()
-  return {
-    exe = "shfmt",
-    args = { "-s -i 4" },
-    stdin = true,
-  }
-end
-
 require("formatter").setup({
   filetype = {
     c = {
@@ -18,8 +10,15 @@ require("formatter").setup({
         }
       end,
     },
-    bash = { shfmt },
-    sh = { shfmt },
+    html = {
+      function()
+        return {
+          exe = "npm prettier",
+          args = { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), "--single-quote" },
+          stdin = true,
+        }
+      end,
+    },
     python = {
       function()
         return {

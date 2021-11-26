@@ -45,12 +45,10 @@ alias \
     bc="bc -ql" \
     cat="bat" \
     md="mkdir" \
-    pipes="pipes.sh -t 1 -p 7 -ccccccc 1 2 3 4 5 6 7" \
     mv="mv -v" \
     rm="rm -i" \
     xbk="xbindkeys -f $XBINDKEYSRC --poll-rc" \
-    def="dict -d gcide" \
-    todo='nvim -c "lcd ~/neorg"' 
+    def="dict -d gcide"
 
 # Shortcuts for the git family
 alias \

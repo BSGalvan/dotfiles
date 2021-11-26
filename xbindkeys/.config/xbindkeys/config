@@ -96,6 +96,18 @@
 # Sound Control -- toggle mute 
 "sounds -m"
  XF86AudioMute
+
+# Media Control -- toggle play-pause
+"playerctl play-pause"
+ XF86AudioPlay
+
+# Media Control -- next track
+"playerctl next"
+ XF86AudioNext
+
+# Media Control -- previous track
+"playerctl previous"
+ XF86AudioPrev
 ##################################
 # End of xbindkeys configuration #
 ##################################
