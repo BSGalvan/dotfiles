@@ -310,7 +310,7 @@
 
     # Close notification. Equivalent dunstctl command:
     # dunstctl close
-    close = ctrl+shift+space
+    # close = ctrl+shift+space
 
     # Close all notifications. Equivalent dunstctl command:
     # dunstctl close-all
@@ -318,7 +318,7 @@
 
     # Redisplay last message(s). Equivalent dunstctl command:
     # dunstctl history-pop
-    history = ctrl+grave
+    # history = ctrl+grave
 
     # Context menu. Equivalent dunstctl command:
     # dunstctl context

@@ -60,6 +60,12 @@ alias \
     gits="git status" \
     gitl="git log --graph --full-history --all --pretty=format:"%h%x09%d%x20%s""
 
+# Shortcuts for transmission-cli
+alias \
+    tmd="transmission-daemon" \
+    tma="transmission-remote -a" \
+    tml="transmission-remote -l" \
+
 # Shortcuts for the ytdl family
 alias \
     ytdla="yt-dlp -x --audio-format vorbis -o '%(title)s.%(ext)s'" \
