@@ -24,7 +24,8 @@ opt.background = "dark" -- Needed for dark bg
 opt.clipboard = "unnamedplus" -- Set clipboard to SYSTEM
 opt.expandtab = true -- Expand <Tab> to spaces
 opt.foldlevel = 99 -- Fold till where?
-opt.foldmethod = "indent" -- Fold at what?
+opt.foldmethod = "expr" -- Fold at what?
+opt.foldexpr = "nvim_treesitter#foldexpr()" -- enable treesitter-based folding
 opt.guicursor = "" -- Turn off mode-based cursor
 opt.hidden = true -- Allow buffer navigation w/o saving
 opt.hlsearch = false -- Search matches don't persist
@@ -32,6 +33,7 @@ opt.incsearch = true -- Highlight matches incrementally
 opt.matchtime = 1 -- Time (in 100ms) to match parentheses
 opt.number = true -- Turn on line numbers
 opt.relativenumber = true -- Number lines relative to current line
+opt.signcolumn = "yes" -- let this be on, so that gitsigns toggle doesn't seem abrupt
 opt.scrolloff = 10 -- Edge limits beyond which to start scroll
 opt.shiftwidth = 4 -- Number of spaces for (auto)indenting
 opt.showcmd = true -- Show (partial) commands in status line
@@ -45,16 +47,13 @@ opt.termguicolors = true -- Enable 24-bit RGB colorspace
 opt.timeoutlen = 500 -- Time (in ms) to wait for next keypress
 opt.wrap = false -- Don't wrap lines
 
-opt.formatoptions = opt.formatoptions
-  - "a" -- Auto formatting is BAD.
-  - "t" -- Don't auto format my code. I got linters for that.
-  + "c" -- In general, I like it when comments respect textwidth
-  + "q" -- Allow formatting comments w/ gq
-  - "o" -- O and o, don't continue comments
-  - "r" -- And don't continue when pressing enter.
-  + "n" -- Indent past the formatlistpat, not underneath it.
-  + "j" -- Auto-remove comments if possible.
-  - "2" -- I'm not in gradeschool anymore
+-- :h 'formatoptions' and :h fo-table for more info
+vim.cmd([[
+    augroup set_formatoptions
+      autocmd!
+      autocmd BufEnter * lua vim.bo.formatoptions="crjq"
+    augroup END
+]])
 
 -- How do I reveal whitespace characters?
 opt.listchars = {

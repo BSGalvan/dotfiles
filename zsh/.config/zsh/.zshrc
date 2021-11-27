@@ -157,6 +157,8 @@ done
 # Colorize man pages using bat
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
+# Making blasphemy easier
+export PATH="${XDG_CONFIG_HOME:-$HOME/.config}/emacs/bin:$PATH"
 
 # End of Compartmentalized Personalization
 # ---------------------------------------------------------------------------------------

@@ -1,11 +1,15 @@
--- Stolen from kabouzeid/dotfiles and the wiki over at neovim/nvim-lspconfig
--- Configuration for nvim-lspinstall + nvim-lspconfig
+--[[
+--   Configuration for nvim-lspconfig + nvim-lsp-installer
+--   Stolen from the wiki over at neovim/nvim-lspconfig and from 
+--   kabouzeid/dotfiles/blob/main/config/nvim/lua/lsp-settings.lua
+--]]
 
 -- keymaps
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
+
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
@@ -30,8 +34,21 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
   buf_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 
+  buf_set_keymap(
+    "n",
+    "]d",
+    '<cmd>lua vim.lsp.diagnostic.goto_next({severity_limit = "Warning", popup_opts = {border = "rounded"}})<CR>',
+    opts
+  )
+  buf_set_keymap(
+    "n",
+    "[d",
+    '<cmd>lua vim.lsp.diagnostic.goto_prev({severity_limit = "Warning", popup_opts = {border = "rounded"}})<CR>',
+    opts
+  )
+
   -- Set some keybinds conditional on server capabilities
-  -- Do we need this? Can we replicate formatter's capabilities?
+  -- Do we need this? Can we replicate formatter.nvim's capabilities?
 
   if client.resolved_capabilities.document_formatting then
     buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
@@ -55,25 +72,12 @@ local on_attach = function(client, bufnr)
 
   -- Set borders for floating windows
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "single",
+    border = "rounded",
   })
 
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signatureHelp, {
-    border = "single",
+    border = "rounded",
   })
-
-  buf_set_keymap(
-    "n",
-    "]d",
-    '<cmd>lua vim.lsp.diagnostic.goto_next({severity_limit = "Warning", popup_opts = {border = "single"}})<CR>',
-    opts
-  )
-  buf_set_keymap(
-    "n",
-    "[d",
-    '<cmd>lua vim.lsp.diagnostic.goto_prev({severity_limit = "Warning", popup_opts = {border = "single"}})<CR>',
-    opts
-  )
 
   -- Change diagnostic symbols in the sign column (gutter)
   local signs = {
@@ -90,8 +94,9 @@ local on_attach = function(client, bufnr)
 end
 
 -- function that activates keymaps and enables snippet support
-local function make_config()
+local function make_config(server_name)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
+  -- What is this huge chunk of code?
   capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown", "plaintext" }
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.textDocument.completion.completionItem.preselectSupport = true
@@ -108,47 +113,57 @@ local function make_config()
     },
   }
 
-  -- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
-  return {
-    -- enable snippet support; uncomment when you actually need
+  local config = {
+    -- enable all the stuff above + snippets
     capabilities = capabilities,
     -- map buffer local keybindings when the language server attaches
     on_attach = on_attach,
   }
-end
 
--- lsp-install
-local function setup_servers()
-  require("lspinstall").setup()
-
-  -- get all installed servers
-  local servers = require("lspinstall").installed_servers()
-
-  -- loop over all install servers and give them configs
-  -- defined above
-  for _, server in pairs(servers) do
-    local config = make_config()
-
-    -- language specific config
-    -- if server == "lua" then
-    --   config.settings = lua_settings
-    -- end
-    -- if server == "sourcekit" then
-    --   config.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
-    -- end
-    if server == "clangd" then
-      config.filetypes = { "c", "cpp" } -- we don't want objective-c and objective-cpp!
-    end
-
-    require("lspconfig")[server].setup(config)
+  if server_name == "clangd" then
+    config.filetypes = { "c", "cpp" } -- we don't want objective-c and objective-cpp!
   end
+  if server_name == "vim" then
+    config.init_options = { isNeovim = true }
+  end
+
+  return config
 end
 
-setup_servers()
+-- nvim-lsp-installer
+-- local function setup_servers()
+--   local lsp_installer = require("nvim-lsp-installer")
 
--- Automatically reload after `:LspInstall <sever>` so we don't have to restart neovim
-require("lspinstall").post_install_hook = function()
-  setup_servers() -- reload installed servers
-  vim.cmd "bufdo e"
-end
+--   -- get all installed servers
+--   local lsp_installer_servers = require("nvim-lsp-installer.servers")
+
+--   -- loop over all installed servers and give them configs
+--   -- defined above, if active; if not installed, queue them to
+--   -- be installed
+--   for _, server in pairs(lsp_installer_servers) do
+--     local config = make_config()
+--     local server_available, requested_server = lsp_installer_servers.get_server(server.name)
+
+--     if server_available then
+--       requested_server:on_ready(function()
+--         local opts = config
+--         requested_server:setup(opts)
+--       end)
+--       if not requested_server:is_installed() then
+--         -- Queue the server to be installed
+--         requested_server:install()
+--       end
+--     end
+--   end
+-- end
+
+-- setup_servers()
+
+-- setup servers installed with nvim-lsp-installer
+-- Register a handler that will be called for all installed servers.
+require("nvim-lsp-installer").on_server_ready(function(server)
+  server:setup(make_config(server.name))
+  vim.cmd([[ do User LspAttachBuffers ]])
+end)

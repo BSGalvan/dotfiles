@@ -1,3 +1,6 @@
+local map_key = vim.api.nvim_set_keymap
+local opts = { noremap = true }
+
 require("formatter").setup({
   filetype = {
     c = {
@@ -49,3 +52,6 @@ require("formatter").setup({
     },
   },
 })
+
+-- Formatter.nvim specific mappings
+map_key("n", "<F5>", "<cmd>Format<CR>", opts)

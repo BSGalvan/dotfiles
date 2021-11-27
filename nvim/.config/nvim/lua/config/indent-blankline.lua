@@ -7,7 +7,7 @@ require("indent_blankline").setup({
   char_list = { "|", "¦", "┆", "┊" },
   show_current_context = true,
   use_treesitter = true,
-  filetype_exclude = { "packer" },
+  filetype_exclude = { "packer" , "help" },
   context_patterns = {
     "class",
     "function",

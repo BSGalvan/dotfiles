@@ -10,9 +10,14 @@ map_key("n", "<c-h>", "<c-w><c-h>", opts)
 -- Enable folding with space
 map_key("n", "<space>", "za", opts)
 
--- Move current line up / down
-map_key("n", "_", "ddkP", opts)
-map_key("n", "-", "ddp", opts)
+-- Add move line shortcuts
+-- See vim.fandom.com/wiki/Moving_lines_up_or_down#Mappings_to_move_lines
+map_key('n', '<A-S-j>', ':m .+1<CR>==', opts)
+map_key('n', '<A-S-k>', ':m .-2<CR>==', opts)
+map_key('i', '<A-S-j>', '<Esc>:m .+1<CR>==gi', opts)
+map_key('i', '<A-S-k>', '<Esc>:m .-2<CR>==gi', opts)
+map_key('v', '<A-S-j>', ':m \'>+1<CR>gv=gv', opts)
+map_key('v', '<A-S-k>', ':m \'<-2<CR>gv=gv', opts)
 
 -- Show non-printing characters
 -- (EOL, trailing spaces, newlines, tabs etc.)
@@ -37,20 +42,12 @@ map_key("n", "te", ":tabedit<Space>", { noremap = true })
 map_key("n", "<Leader>s", ":split<Space>", { noremap = true })
 map_key("n", "<Leader>v", ":vsplit<Space>", { noremap = true })
 
--- Formatter.nvim specific mappings
-map_key("n", "<F5>", "<cmd>Format<CR>", { noremap = true })
-
 -- Telescope.nvim specific mappings
 map_key("n", "<Space>fb", "<cmd>Telescope buffers<CR>", opts)
-map_key("n", "<Space>fe", "<cmd>Telescope file_browser<CR>", opts)
-map_key("n", "<Space>ff", "<cmd>Telescope find_files<CR>", opts)
+map_key("n", "<Space>fe", "<cmd>lua require('telescope').extensions.file_browser.file_browser()<CR>", opts)
 map_key("n", "<Space>fh", "<cmd>Telescope help_tags<CR>", opts)
 map_key("n", "<Space>fo", "<cmd>Telescope oldfiles<CR>", opts)
+map_key("n", "<Space>fq", "<cmd>Telescope quickfix<CR>", opts)
 map_key("n", "<Space>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", opts)
 map_key("n", "<Space>t", "<cmd>Telescope<CR>", opts)
-
--- Sniprun specific mappings
-map_key("v", "f", "<Plug>SnipRun", { silent = true })
-map_key("n", "<leader>f", "<Plug>SnipRunOperator", { silent = true })
-map_key("n", "<leader>ff", "<Plug>SnipRun", { silent = true })
-map_key("n", "<leader>fc", "<Plug>SnipClose", { silent = true })
+map_key("n", "<Space>wk", "<cmd>lua require('telescope.builtin').find_files({cwd = '/home/bsg/wiki/src'})<CR>", opts) -- TODO: configure a bit more
