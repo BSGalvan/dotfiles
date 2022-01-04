@@ -118,7 +118,6 @@ return require("packer").startup({
     -- Note-taking and more!
     use({
       "nvim-neorg/neorg",
-      branch = "unstable",
       after = {
         "nvim-treesitter",
         "nvim-cmp",

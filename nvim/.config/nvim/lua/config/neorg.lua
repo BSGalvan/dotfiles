@@ -31,7 +31,7 @@ require("neorg").setup({
     ["core.norg.dirman"] = {
       config = {
         workspaces = {
-          todo = "~/neorg/todo",
+          todo = "~/notes/neorg/todo",
         },
         -- Automatically detect whenever we have entered a subdirectory of a workspace
         autodetect = true,

@@ -5,6 +5,7 @@
 local lualine = require("lualine")
 
 -- Color table for highlights
+-- Colors specifically for bluz71/vim-moonfly-colors
 local colors = {
   bg = "#0d0f0c",
   fg = "#ffffff",
@@ -161,7 +162,7 @@ ins_left({
 
 ins_left({
   "diagnostics",
-  sources = { "nvim_lsp" },
+  sources = { "nvim_diagnostic" },
   symbols = { error = " ", warn = " ", info = " " },
   diagnostics_color = {
     error = { fg = colors.red },

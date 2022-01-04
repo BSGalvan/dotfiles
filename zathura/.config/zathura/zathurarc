@@ -20,9 +20,9 @@ map R rotate
 map u scroll half-up
 map w zoom width
 
-########################
-# Default++ Colorscheme#
-########################
+#########################
+# Default++ Colorscheme #
+#########################
 
 set notification-error-bg       "#ff5454" # LighterRed
 set notification-error-fg       "#ffffd7" # Foreground

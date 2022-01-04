@@ -1,0 +1,16 @@
+#!/bin/sh
+
+feh --no-fehbg --bg-fill --randomize /home/bsg/pics/walls/*
+xbindkeys -f $XBINDKEYSRC
+xrdb -load $XRESOURCES
+redshift &
+dunst &
+batsignal -e -b \
+    -w 20 -W "Warning: Battery is low." \
+    -c 10 -C "Warning: Battery is critically low." \
+    -d 5  -D "WARNING: Battery is dangerously low\!"
+    -f 100 -F "Notice: Battery is fully charged." &
+playerctld daemon &
+unclutter &
+slstatus &
+picom --experimental-backends -b &

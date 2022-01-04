@@ -1,0 +1,63 @@
+!!=== Moonfly ===
+! st should pull from this
+! if you have it patched correctly
+
+! black
+*.color0:       #323437
+*.color8:       #949494
+
+! red
+*.color1:       #ff5454
+*.color9:       #ff5189
+
+! green
+*.color2:       #8cc85f
+*.color10:      #36c692
+
+! yellow
+*.color3:       #e3c78a
+*.color11:      #bfbf97
+
+! blue
+*.color4:       #80a0ff
+*.color12:      #74b2ff
+
+! magenta
+*.color5:       #d183e8
+*.color13:      #ae81ff
+
+! cyan
+*.color6:       #79dac8
+*.color14:      #85dc85
+
+! white
+*.color7:       #c6c6c6
+*.color15:      #e4e4e4
+
+!!=== Settings for dwm ===
+
+dwm.normbgcolor:        #080808
+dwm.normbordercolor:    #ae81ff
+dwm.normfgcolor:        #e3c78a
+dwm.selfgcolor:         #ffffff
+dwm.selbordercolor:     #36c692
+dwm.selbgcolor:         #195e45
+
+!!=== End of dwm Settings ===
+
+!!=== Settings for sxiv ===
+
+Sxiv.background:    #080808
+Sxiv.foreground:    #36c692
+Sxiv.font:          FiraCode Nerd Font:style=Regular:size=12
+
+!!=== End of sxiv Settings ===
+
+!! Override the dpi settings
+! look at xrandr output to see
+! what this should be set to
+Xft.dpi: 96
+
+!! Choose a cursor theme and size
+Xcursor.theme: gentoo
+Xcursor.size:  24
