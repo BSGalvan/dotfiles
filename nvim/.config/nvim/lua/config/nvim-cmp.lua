@@ -1,4 +1,5 @@
 -- nvim-cmp setup
+
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -21,7 +22,7 @@ cmp.setup({
     }),
   },
 
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ["<C-p>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -36,10 +37,10 @@ cmp.setup({
       if cmp.visible() then
         -- use floating window instead of native menu
         cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
       elseif has_words_before() then
         cmp.complete()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -59,11 +60,12 @@ cmp.setup({
       "i",
       "s",
     }),
+  }),
+  window = {
+    documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
   },
-  documentation = {
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-  },
-  sources = {
+  sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "nvim_lua" },
     { name = "luasnip" },
@@ -82,12 +84,14 @@ cmp.setup({
       },
     },
     { name = "neorg" },
-  },
+  }),
 })
 
 cmp.setup.cmdline(":", {
-  sources = {
-    { name = "cmdline" },
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
     { name = "path" },
-  },
+  }, {
+    { name = "cmdline" },
+  }),
 })

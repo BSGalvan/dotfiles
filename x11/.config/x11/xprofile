@@ -4,6 +4,7 @@ feh --no-fehbg --bg-fill --randomize /home/bsg/pics/walls/*
 xbindkeys -f $XBINDKEYSRC
 xrdb -load $XRESOURCES
 redshift &
+syncthing -no-browser 1>/dev/null 2>&1 & 
 dunst &
 batsignal -e -b \
     -w 20 -W "Warning: Battery is low." \

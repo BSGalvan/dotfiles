@@ -79,10 +79,9 @@ return require("packer").startup({
       requires = {
         -- lots of snippets for different filetypes
         "rafamadriz/friendly-snippets",
+        -- "all-purpose" annotation generator
+        "danymat/neogen",
       },
-      config = function()
-        require("config.snippets")
-      end,
     })
 
     -- (Auto)Completion
@@ -129,10 +128,27 @@ return require("packer").startup({
     })
 
     -- A simpler version of vimwiki, now in Lua!
+    -- use({
+    --   "jakewvincent/mkdnflow.nvim",
+    --   config = function()
+    --     require("config.mkdnflow")
+    --   end,
+    -- })
+
+    -- Distraction-free coding for Neovim
     use({
-      "jakewvincent/mkdnflow.nvim",
+      "folke/zen-mode.nvim",
       config = function()
-        require("config.mkdnflow")
+        require("zen-mode").setup()
+      end,
+    })
+
+    -- Dim inactive parts of the code
+    -- Lua
+    use({
+      "folke/twilight.nvim",
+      config = function()
+        require("twilight").setup()
       end,
     })
 
@@ -168,10 +184,6 @@ return require("packer").startup({
       config = function()
         require("config.theme")
       end,
-    })
-
-    use({
-      "NTBBloodbath/doom-one.nvim",
     })
 
     -- Statusline
@@ -266,19 +278,6 @@ return require("packer").startup({
       "tweekmonster/startuptime.vim",
       as = "startuptime",
       cmd = "StartupTime",
-    })
-
-    -- Interactive neovim scratchpad for Lua!
-    use({
-      "rafcamlet/nvim-luapad",
-      opt = true,
-      cmd = {
-        "Luapad",
-        "LuaRun",
-      },
-      config = function()
-        require("luapad").init()
-      end,
     })
   end,
   config = {

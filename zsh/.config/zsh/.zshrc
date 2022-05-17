@@ -1,4 +1,4 @@
-#fortune -n 100 -s | cowsay | lolcat-jaseg -v 1
+fortune -n 100 -s | cowsay | lolcat-jaseg -v 1
 
 # ---------------------------------------------------------------------------------------
 # Lines configured by zsh-newuser-install
@@ -158,7 +158,7 @@ done
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # Making blasphemy easier
-export PATH="${XDG_CONFIG_HOME:-$HOME/.config}/emacs/bin:$PATH"
+# export PATH="${XDG_CONFIG_HOME:-$HOME/.config}/emacs/bin:$PATH"
 
 # End of Compartmentalized Personalization
 # ---------------------------------------------------------------------------------------
@@ -167,17 +167,41 @@ export PATH="${XDG_CONFIG_HOME:-$HOME/.config}/emacs/bin:$PATH"
 # ---------------------------------------------------------------------------------------
 # !! Contents within this block are managed by 'conda init' !!
 
-__conda_setup="$('/home/bsg/.local/share/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/bsg/.local/share/mambaforge/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
     if [ -f "/home/bsg/.local/share/mambaforge/etc/profile.d/conda.sh" ]; then
         . "/home/bsg/.local/share/mambaforge/etc/profile.d/conda.sh"
     else
-    export PATH="$PATH:/home/bsg/.local/share/mambaforge/bin"
-      fi
+        export PATH="/home/bsg/.local/share/mambaforge/bin:$PATH"
+    fi
 fi
 unset __conda_setup
 
+if [ -f "/home/bsg/.local/share/mambaforge/etc/profile.d/mamba.sh" ]; then
+    . "/home/bsg/.local/share/mambaforge/etc/profile.d/mamba.sh"
+fi
+
 # End of Conda Initialization
+# ---------------------------------------------------------------------------------------
+
+
+# Initialization of stuff for Work
+# ---------------------------------------------------------------------------------------
+# Declarations for xsmdas
+export xsmdas="/home/bsg/work/xsm/software/xsmdas"
+export PATH="$xsmdas/bin:$xsmdas/scripts:$PATH"
+export LD_LIBRARY_PATH="$xsmdas/lib/":$LD_LIBRARY_PATH
+export PFILES="$PFILES:$xsmdas/pfiles"
+
+# Declarations for HEAsoft
+export HEADAS="/home/bsg/work/heasoft-6.29/x86_64-pc-linux-gnu-libc2.33"
+#. $HEADAS/headas-init.sh
+
+# Declarations for CSpice
+export cspice="/home/bsg/work/cspice"
+export PATH="$PATH:$cspice/exe"
+
+# End of Work Stuff Initialization
 # ---------------------------------------------------------------------------------------

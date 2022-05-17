@@ -24,7 +24,7 @@ alias \
     csls="${EDITOR:-vim} $XDG_CONFIG_HOME/slstatus/config.h" \
     cst="${EDITOR:-vim} $XDG_CONFIG_HOME/st/config.h" \
     cvrc="${EDITOR:-vim} $XDG_CONFIG_HOME/vim/vimrc" \
-    cnvc="${EDITOR:-vim} $XDG_CONFIG_HOME/nvim/init.vim" \
+    cnvc="${EDITOR:-vim} $XDG_CONFIG_HOME/nvim/init.lua" \
     czal="${EDITOR:-vim} $XDG_CONFIG_HOME/zsh/include/aliases.zsh" \
     czat="${EDITOR:-vim} $XDG_CONFIG_HOME/zathura/zathurarc" \
     czsh="${EDITOR:-vim} $XDG_CONFIG_HOME/zsh/.zshrc"
@@ -70,3 +70,7 @@ alias \
 alias \
     ytdla="yt-dlp -x --audio-format vorbis -o '%(title)s.%(ext)s'" \
     ytdlp="yt-dlp -x --audio-format vorbis -o '%(playlist_index)02d %(track)s.%(ext)s'"
+
+# Shortcuts for work
+alias \
+    heainit=". $HEADAS/headas-init.sh"

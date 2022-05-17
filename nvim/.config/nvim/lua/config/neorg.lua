@@ -6,10 +6,11 @@ require("neorg").setup({
   load = {
     -- You'd put custom configuration options inside the squirly braces below ...
     ["core.defaults"] = {},
+    ["core.norg.qol.toc"] = {},
     ["core.keybinds"] = {
       config = {
-        default_keybinds = false, -- do NOT autogenerate default keybinds
-        neorg_leader = "<Leader>o", -- for 'organize'
+        default_keybinds = true, -- do autogenerate default keybinds
+        neorg_leader = "<LocalLeader>",
       },
     },
     ["core.integrations.treesitter"] = {
@@ -24,14 +25,19 @@ require("neorg").setup({
         },
       },
     },
-    ["core.norg.esupports"] = {
-      goto_links = true,
+    ["core.gtd.base"] = {
+      config = {
+        workspace = "gtd",
+      },
     },
     ["core.norg.concealer"] = {},
     ["core.norg.dirman"] = {
       config = {
         workspaces = {
           todo = "~/notes/neorg/todo",
+          neovim = "~/notes/neorg/nvim",
+          gtd = "~/notes/neorg/gtd",
+          dsa = "~/notes/neorg/dsa",
         },
         -- Automatically detect whenever we have entered a subdirectory of a workspace
         autodetect = true,
