@@ -146,6 +146,7 @@ sources=(
     'aliases'
     'fontpreview-ueberzug'
     'fzf'
+    'proxy'
     'timer'
     'z'
 )
