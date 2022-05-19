@@ -1,3 +1,5 @@
 proxy.zsh
+nvim/.config/nvim/plugin/packer_compiled.lua
+# Remove everything except init.el
 emacs/.config/emacs/*
 !emacs/.config/emacs/init.el
