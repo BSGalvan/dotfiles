@@ -1,4 +1,4 @@
-fortune -n 100 -s | cowsay | lolcat-jaseg -v 1
+fortune -n 100 -s | cowsay | lolcat -v 1
 
 # ---------------------------------------------------------------------------------------
 # Lines configured by zsh-newuser-install

@@ -32,7 +32,7 @@ shell = "zsh"
         use = ["gitstatus.prompt.zsh"]
 
     [plugins.z]
-        remote = 'https://github.com/rupa/z/raw/master/z.sh'
+        github = 'rupa/z'
         apply = ["defer"]
 
     [plugins.timer]
