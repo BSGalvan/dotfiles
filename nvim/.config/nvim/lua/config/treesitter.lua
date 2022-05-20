@@ -39,6 +39,21 @@ require("nvim-treesitter.configs").setup({
     -- should get removed once TS parser for (n)org files gets better
     additional_vim_regex_highlighting = { "norg" },
   },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = 10000,
+    colors = {
+        -- bluz71/nightfly bright colours
+        "#ff5874",
+        "#21c7a8",
+        "#ecc48d",
+        "#82aaff",
+        "#ae81ff",
+        "#7fdbca",
+        "#d6deeb"
+    },
+  },
   indent = {
     enable = true,
   },
