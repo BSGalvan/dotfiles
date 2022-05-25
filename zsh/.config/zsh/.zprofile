@@ -14,6 +14,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
 export _JAVA_AWT_WM_NONREPARENTING=1   # Fix for Java applications in dwm
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export CONDARC="${XDG_CONFIG_HOME:-$HOME/.config}/conda/condarc"
 export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"

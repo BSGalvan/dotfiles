@@ -1,9 +1,8 @@
-;; Set the colour scheme
-(load-theme 'doom-vibrant t)
-
 ;; Turn on some much needed UI/UX elements
+(global-display-line-numbers-mode 1)
 (setq display-line-numbers 'relative)
 (hl-line-mode 1)
+(set-default 'truncate-lines 1)
 (blink-cursor-mode 1)
 (column-number-mode t)
 (fringe-mode 10)
@@ -21,6 +20,13 @@
 (setq inhibit-startup-message t  ; Don't display splash screen
       visible-bell t)            ; Flash screen for attention
 
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+                term-mode-hook
+                shell-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
 ;; Use M-x recentf-open-files to see recently opened files
 (recentf-mode 1)
 
@@ -36,8 +42,9 @@
 (load custom-file 'noerror 'nomessage)
 
 ;; Customize font settings
-(set-face-attribute 'default nil :family "FiraCode Nerd Font" :height 140)
+(set-face-attribute 'default nil :family "FiraCode Nerd Font" :height 120)
 (set-face-attribute 'fixed-pitch nil :family "FiraCode Nerd Font Mono" :height 120)
+(set-face-attribute 'variable-pitch nil :family "Fira Math" :height 130)
 
 ;; Don't pop up UI dialogs when prompting
 (setq use-dialog-box nil)
@@ -99,18 +106,19 @@
   :init
   (ivy-mode 1))
 
+
+;; Add in doom-themes because why not
+(use-package doom-themes
+  :init (load-theme 'doom-vibrant t)
+  :config (doom-themes-visual-bell-config))
+
+(use-package all-the-icons
+  :if (display-graphic-p))
+
 ;; Spruce up the modeline
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
-
-;; Add in doom-themes because why not
-(use-package doom-themes
-  :custom (doom-themes-visual-bell-config))
-
-;; Icons everywhere!
-(use-package all-the-icons
-  :if (display-graphic-p))
 
 ;; Rainbow parenthesis
 (use-package rainbow-delimiters
@@ -139,3 +147,166 @@
   ([remap describe-variable] . helpful-variable)
   ([remap describe-command] . helpful-command)
   ([remap describe-key] . helpful-key))
+
+;; Saner way to setup global and mode-specific keybindings
+(use-package general
+  :config
+  (general-create-definer bsg/leader-keys
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+
+  (bsg/leader-keys
+    "tt" '(counsel-load-theme :which-key "choose theme")
+    "fb" '(counsel-switch-buffer :which-key "find buffer")
+    "ff" '(counsel-find-file :which-key "find file")
+    "fo" '(counsel-recentf :which-key "find old file")))
+
+;; "Here's a little lesson in trickery..."
+
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  :config
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+ 
+  ;; Use visual line motions even outside of visual-line-mode buffers
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+  ;; Set starting modes for some buffers
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
+
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package hydra)
+
+(defhydra hydra-text-scale (:timeout 4)
+  "scale text"
+  ("j" text-scale-increase "in")
+  ("k" text-scale-decrease "out")
+  ("f" nil "finished" :exit t))
+
+(bsg/leader-keys
+  "ts" '(hydra-text-scale/body :which-key "scale text"))
+
+(defun bsg/org-mode-setup ()
+  (org-indent-mode)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (variable-pitch-mode 1)
+  (setq-default line-spacing 3)
+  (setq evil-auto-indent nil))
+
+(defun bsg/org-font-setup ()
+  ;; Replace list hyphen with dot
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  ;; Set faces for heading levels
+  (dolist (face '((org-level-1 . 1.20)
+                  (org-level-2 . 1.15)
+                  (org-level-3 . 1.10)
+                  (org-level-4 . 1.05)
+                  (org-level-5 . 1.02)))
+    (set-face-attribute (car face) nil :font "Fira Math" :weight 'bold :height (cdr face)))
+
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
+
+(use-package org
+  :hook ((org-mode . bsg/org-mode-setup)
+	 (org-mode . org-toggle-pretty-entities))
+  :config
+  (setq org-ellipsis " ⮟"
+	org-hide-emphasis-markers t)
+  (bsg/org-font-setup))
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+
+(defun bsg/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . bsg/org-mode-visual-fill))
+
+(use-package ligature
+  :load-path "~/Downloads/github/ligature.el"
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
+
+(use-package org-roam
+  :custom
+  (org-roam-directory "~/notes/roam-notes")
+  (org-roam-completion-everywhere t)
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?"
+      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
+      :unnarrowed t)
+     ("l" "prog-lang" plain
+      (file "~/notes/roam-notes/Templates/ProgLang.org")
+      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
+      :unnarrowed t)))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+	 ("C-c n f" . org-roam-node-find)
+	 ("C-c n i" . org-roam-node-insert)
+	 :map org-mode-map
+	 ("C-M-i" . completion-at-point))
+  :config
+  (org-roam-setup))
+
+(use-package org-roam-ui
+  :after org-roam
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
