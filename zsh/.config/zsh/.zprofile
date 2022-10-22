@@ -5,7 +5,7 @@ export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 export VISUAL="nvim"
 export EDITOR="nvim"
 export TERMINAl="st"
-export BROWSER="brave-bin"
+export BROWSER="firefox-bin"
 
 # Cleaning up ~
 export XDG_CACHE_HOME="$HOME/.cache"
