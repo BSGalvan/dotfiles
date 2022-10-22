@@ -1,4 +1,4 @@
-fortune -n 100 -s | cowsay | lolcat -v 1
+fortune -n 100 -s | cowsay | lolcat-jaseg -v 1
 
 # ---------------------------------------------------------------------------------------
 # Lines configured by zsh-newuser-install
@@ -10,7 +10,7 @@ HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 HISTSIZE=10000
 SAVEHIST=1000000
 
-setopt autocd extendedglob nomatch notify
+setopt autocd extendedglob nomatch notify HIST_IGNORE_SPACE
 unsetopt beep
 bindkey -v
 
@@ -135,6 +135,9 @@ timezsh() {
   for i in $(seq 1 10); do time $shell -i -c exit; done
 }
 
+## Initialize the tty for GPG to use.
+export GPG_TTY=$(tty)
+
 # End of Easy Life configuration
 # ---------------------------------------------------------------------------------------
 
@@ -146,7 +149,7 @@ sources=(
     'aliases'
     'fontpreview-ueberzug'
     'fzf'
-    'proxy'
+    # 'proxy'
     'timer'
     'z'
 )
@@ -168,7 +171,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # ---------------------------------------------------------------------------------------
 # !! Contents within this block are managed by 'conda init' !!
 
-__conda_setup="$('/home/bsg/.local/share/mambaforge/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/bsg/.local/share/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
@@ -191,6 +194,7 @@ fi
 # Initialization of stuff for Work
 # ---------------------------------------------------------------------------------------
 # Declarations for xsmdas
+
 export xsmdas="/home/bsg/work/xsm/software/xsmdas"
 export PATH="$xsmdas/bin:$xsmdas/scripts:$PATH"
 export LD_LIBRARY_PATH="$xsmdas/lib/":$LD_LIBRARY_PATH
@@ -206,3 +210,7 @@ export PATH="$PATH:$cspice/exe"
 
 # End of Work Stuff Initialization
 # ---------------------------------------------------------------------------------------
+
+export GRIZLI="${XDG_CONFIG_HOME:-$HOME/.config}/grizli" # or anywhere else
+export iref="${GRIZLI}/iref/"  # for WFC3 calibration files
+export jref="${GRIZLI}/jref/"  # for ACS calibration files
