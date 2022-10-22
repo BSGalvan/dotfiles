@@ -113,7 +113,7 @@ local function make_config(server_name)
     },
   }
 
-  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+  capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
   local config = {
     -- enable all the stuff above + snippets
