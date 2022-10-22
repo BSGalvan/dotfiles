@@ -27,7 +27,8 @@ alias \
     cnvc="${EDITOR:-vim} $XDG_CONFIG_HOME/nvim/init.lua" \
     czal="${EDITOR:-vim} $XDG_CONFIG_HOME/zsh/include/aliases.zsh" \
     czat="${EDITOR:-vim} $XDG_CONFIG_HOME/zathura/zathurarc" \
-    czsh="${EDITOR:-vim} $XDG_CONFIG_HOME/zsh/.zshrc"
+    czsh="${EDITOR:-vim} $XDG_CONFIG_HOME/zsh/.zshrc" \
+    cssh="${EDITOR:-vim} $HOME/.ssh/config"
 
 # Shortcuts for the ls family
 alias \
@@ -52,24 +53,29 @@ alias \
 
 # Shortcuts for the git family
 alias \
-    gitP="git push" \
     gita="git add" \
     gitc="git commit" \
     gitd="git diff" \
+    gitl='git log --graph --full-history --all --pretty=format:"%h%x09%d%x20%s"' \
     gitp="git pull" \
-    gits="git status" \
-    gitl="git log --graph --full-history --all --pretty=format:"%h%x09%d%x20%s""
+    gitP="git push" \
+    gitr="git restore" \
+    gits="git status"
 
 # Shortcuts for transmission-cli
 alias \
-    tmd="transmission-daemon" \
     tma="transmission-remote -a" \
+    tmd="transmission-daemon" \
     tml="transmission-remote -l" \
 
 # Shortcuts for the ytdl family
 alias \
     ytdla="yt-dlp -x --audio-format vorbis -o '%(title)s.%(ext)s'" \
     ytdlp="yt-dlp -x --audio-format vorbis -o '%(playlist_index)02d %(track)s.%(ext)s'"
+
+# Shortcuts for the buku family
+alias \
+    b="buku --suggest"
 
 # Shortcuts for work
 alias \
