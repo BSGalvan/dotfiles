@@ -70,7 +70,8 @@
   Mod4 + Shift + w
 
 # Lock the screen
-"betterlockscreen -l blur"
+# "betterlockscreen -l blur"
+"xscreensaver-command --lock"
   Mod4 + Escape
 
 # Brightness Control -- increase brightness
