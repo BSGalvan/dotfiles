@@ -54,6 +54,15 @@
 ;; Auto-refresh non-file buffers (such as Dired)
 (setq global-auto-revert-non-file-buffers t)
 
+;; First set proxy settings
+;; (setq url-proxy-services
+;;       '(("https" . "ip.ip.ip.ip:port")
+;;         ("http"  . "ip.ip.ip.ip:port")))
+;; (setq url-http-proxy-basic-auth-storage
+;;         (list (list "ip.ip.ip.ip:port"
+;;                     (cons "Input your LDAP UID !"
+;;                           (base64-encode-string "password")))))
+
 ;; Initialize package sources
 (require 'package)
 
