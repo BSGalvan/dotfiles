@@ -72,7 +72,7 @@
 # Lock the screen
 # "betterlockscreen -l blur"
 "xscreensaver-command --lock"
-  Mod4 + Super_L
+  Mod4 + Escape
 
 # Brightness Control -- increase brightness
 "xbacklight -inc +10 -fps 60"
