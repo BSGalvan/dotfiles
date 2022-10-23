@@ -115,17 +115,17 @@ return require("packer").startup({
     --   (with some inspiration from the Church of Emacs, of course)
     --]]
     -- Note-taking and more!
-    use({
-      "nvim-neorg/neorg",
-      after = {
-        "nvim-treesitter",
-        "nvim-cmp",
-      },
-      requires = "nvim-lua/plenary.nvim",
-      config = function()
-        require("config.neorg")
-      end,
-    })
+    -- use({
+    --   "nvim-neorg/neorg",
+    --   after = {
+    --     "nvim-treesitter",
+    --     "nvim-cmp",
+    --   },
+    --   requires = "nvim-lua/plenary.nvim",
+    --   config = function()
+    --     require("config.neorg")
+    --   end,
+    -- })
 
     -- A simpler version of vimwiki, now in Lua!
     -- use({
