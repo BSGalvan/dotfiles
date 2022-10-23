@@ -41,7 +41,7 @@ mkdir /tmp/LS_COLORS &&
     curl -L https://api.github.com/repos/trapd00r/LS_COLORS/tarball/master |
     tar xzf - --directory=/tmp/LS_COLORS --strip=1 &&
     cd /tmp/LS_COLORS && 
-    sh install.sh 2>/dev/null 1>&2
+    make install 2>/dev/null 1>&2
 
 # Step 4.) Enable LS_COLORS!
 source "${XDG_DATA_HOME:-$HOME/.local/share}/lscolors.sh"
@@ -146,7 +146,7 @@ sources=(
     'aliases'
     'fontpreview-ueberzug'
     'fzf'
-    'proxy'
+    # 'proxy'
     'timer'
     'z'
 )
@@ -168,7 +168,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # ---------------------------------------------------------------------------------------
 # !! Contents within this block are managed by 'conda init' !!
 
-__conda_setup="$('/home/bsg/.local/share/mambaforge/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/bsg/.local/share/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
