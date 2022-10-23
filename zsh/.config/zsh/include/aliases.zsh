@@ -71,6 +71,10 @@ alias \
     ytdla="yt-dlp -x --audio-format vorbis -o '%(title)s.%(ext)s'" \
     ytdlp="yt-dlp -x --audio-format vorbis -o '%(playlist_index)02d %(track)s.%(ext)s'"
 
+# Shortcuts for the buku family
+alias \
+    b="buku --suggest"
+
 # Shortcuts for work
 alias \
     heainit=". $HEADAS/headas-init.sh"
