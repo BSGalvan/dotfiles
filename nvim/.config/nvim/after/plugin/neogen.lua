@@ -13,4 +13,4 @@ ng.setup({
   },
 })
 
-vim.api.nvim_set_keymap({ "i", "n" }, "<leader>ng", ":lua require('neogen').generate()<CR>", opts)
+vim.keymap.set({ "i", "n" }, "<leader>ng", ":lua require('neogen').generate()<CR>", opts)
