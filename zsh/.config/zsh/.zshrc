@@ -1,4 +1,5 @@
-fortune -n 100 -s | cowsay | lolcat -v 1
+
+fortune -n 100 -s | cowthink -f $(basename $(find /usr/share/cows -type f -name "*.cow" | shuf | head -n1) .cow) | lolcat -v 1
 
 # ---------------------------------------------------------------------------------------
 # Lines configured by zsh-newuser-install
@@ -10,7 +11,7 @@ HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 HISTSIZE=10000
 SAVEHIST=1000000
 
-setopt autocd extendedglob nomatch notify
+setopt autocd extendedglob nomatch notify HIST_IGNORE_SPACE
 unsetopt beep
 bindkey -v
 
@@ -37,11 +38,10 @@ eval "$(sheldon source)"
 # Step 3.) Clone trapd00r/LS_COLORS and install a lscolors.(c)sh in
 #          $XDG_DATA_HOME if it doesn't exist.
 [[ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}/lscolors.sh" ]] &&
-mkdir /tmp/LS_COLORS &&
-    curl -L https://api.github.com/repos/trapd00r/LS_COLORS/tarball/master |
-    tar xzf - --directory=/tmp/LS_COLORS --strip=1 &&
-    cd /tmp/LS_COLORS && 
-    sh install.sh 2>/dev/null 1>&2
+cd $(mktemp -d tmp.LSCOLORSXXX) &&
+    curl -sL https://api.github.com/repos/trapd00r/LS_COLORS/tarball/master |
+    tar xzf - --directory=$(pwd) --strip=1 &&
+    make install 2>/dev/null 1>&2
 
 # Step 4.) Enable LS_COLORS!
 source "${XDG_DATA_HOME:-$HOME/.local/share}/lscolors.sh"
@@ -146,7 +146,7 @@ sources=(
     'aliases'
     'fontpreview-ueberzug'
     'fzf'
-    'proxy'
+    # 'proxy'
     'timer'
     'z'
 )
@@ -168,14 +168,14 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # ---------------------------------------------------------------------------------------
 # !! Contents within this block are managed by 'conda init' !!
 
-__conda_setup="$('/home/bsg/.local/share/mambaforge/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/bsg/.local/share/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
     if [ -f "/home/bsg/.local/share/mambaforge/etc/profile.d/conda.sh" ]; then
-        . "/home/bsg/.local/share/mambaforge/etc/profile.d/conda.sh"
+# . "/home/bsg/.local/share/mambaforge/etc/profile.d/conda.sh"  # commented out by conda initialize
     else
-        export PATH="/home/bsg/.local/share/mambaforge/bin:$PATH"
+# export PATH="/home/bsg/.local/share/mambaforge/bin:$PATH"  # commented out by conda initialize
     fi
 fi
 unset __conda_setup
@@ -197,7 +197,7 @@ export LD_LIBRARY_PATH="$xsmdas/lib/":$LD_LIBRARY_PATH
 export PFILES="$PFILES:$xsmdas/pfiles"
 
 # Declarations for HEAsoft
-export HEADAS="/home/bsg/work/heasoft-6.29/x86_64-pc-linux-gnu-libc2.33"
+export HEADAS="/home/bsg/work/heasoft-6.30.1/x86_64-pc-linux-gnu-libc2.35"
 #. $HEADAS/headas-init.sh
 
 # Declarations for CSpice
