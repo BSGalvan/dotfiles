@@ -70,15 +70,16 @@
   Mod4 + Shift + w
 
 # Lock the screen
-"betterlockscreen -l blur"
+# "betterlockscreen -l blur"
+"xscreensaver-command --lock"
   Mod4 + Escape
 
 # Brightness Control -- increase brightness
-"xbacklight -ctrl amdgpu_bl0 -inc +10 -fps 60"
+"xbacklight -inc +10 -fps 60"
   XF86MonBrightnessUp
 
 # Brightness Control -- decrease brightness
-"xbacklight -ctrl amdgpu_bl0 -inc -10 -fps 60"
+"xbacklight -inc -10 -fps 60"
   XF86MonBrightnessDown
 
 # Power Control -- prompt user for power options

@@ -5,10 +5,11 @@
 [ -f "/usr/share/fzf/key-bindings.zsh" ] &&
     source "/usr/share/fzf/key-bindings.zsh"
 
-# Path for Gentoo: https://gitweb.gentoo.org/repo/gentoo.git/tree/app-shells/fzf/fzf-0.29.0.ebuild#n83-n89
+# Gentoo-specific completion file
 [ -f "/usr/share/zsh/site-functions/_fzf" ] && export completion_file="/usr/share/zsh/site-functions/_fzf"
 
-# Path for Arch: https://github.com/archlinux/svntogit-community/blob/packages/fzf/trunk/PKGBUILD#L67-L69
+# Arch-specific completion file
+>>>>>>> 01ec673d77cb152afe605d30b650ac3a8d987532
 [ -f "/usr/share/fzf/completion.zsh" ] && export completion_file="/usr/share/fzf/completion.zsh"
 
 source $completion_file

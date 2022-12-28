@@ -140,7 +140,6 @@ return require("packer").startup({
     --   to be more than just a text-editor
     --   (with some inspiration from the Church of Emacs, of course)
     --]]
-
     -- Distraction-free coding for Neovim
     use({
       "folke/zen-mode.nvim",
