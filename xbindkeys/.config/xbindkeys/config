@@ -74,6 +74,7 @@
 "xscreensaver-command --lock"
   Mod4 + Escape
 
+<<<<<<< Updated upstream
 # Brightness Control -- increase brightness
 "xbacklight -inc +10 -fps 60"
   XF86MonBrightnessUp
@@ -81,34 +82,43 @@
 # Brightness Control -- decrease brightness
 "xbacklight -inc -10 -fps 60"
   XF86MonBrightnessDown
+=======
+# # Brightness Control -- increase brightness
+# "xbacklight -ctrl amdgpu_bl0 -inc +10 -fps 60"
+#   XF86MonBrightnessUp
+
+# # Brightness Control -- decrease brightness
+# "xbacklight -ctrl amdgpu_bl0 -inc -10 -fps 60"
+#   XF86MonBrightnessDown
+>>>>>>> Stashed changes
 
 # Power Control -- prompt user for power options
 "source /home/bsg/.local/bin/powerdown"
   Mod4 + Shift + s 
 
-# Sound Control -- increase sound
-"sounds -i 5"
-  XF86AudioRaiseVolume
+# # Sound Control -- increase sound
+# "sounds -i 5"
+#   XF86AudioRaiseVolume
 
-# Sound Control -- decrease sound
-"sounds -d 5"
-  XF86AudioLowerVolume
+# # Sound Control -- decrease sound
+# "sounds -d 5"
+#   XF86AudioLowerVolume
 
-# Sound Control -- toggle mute 
-"sounds -m"
-  XF86AudioMute
+# # Sound Control -- toggle mute 
+# "sounds -m"
+#   XF86AudioMute
 
-# Media Control -- toggle play-pause
-"playerctl play-pause"
-  XF86AudioPlay
+# # Media Control -- toggle play-pause
+# "playerctl play-pause"
+#   XF86AudioPlay
 
-# Media Control -- next track
-"playerctl next"
-  XF86AudioNext
+# # Media Control -- next track
+# "playerctl next"
+#   XF86AudioNext
 
-# Media Control -- previous track
-"playerctl previous"
-  XF86AudioPrev
+# # Media Control -- previous track
+# "playerctl previous"
+#   XF86AudioPrev
 
 # Notification Controls -- dunst
 "dunstctl close"

@@ -86,9 +86,6 @@ return require("packer").startup({
     -- (Auto)Completion
     use({
       "hrsh7th/nvim-cmp",
-      config = function()
-        require("config.nvim-cmp")
-      end,
       requires = {
         -- luasnip snippet source for nvim-cmp
         "saadparwaiz1/cmp_luasnip",
