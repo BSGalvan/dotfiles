@@ -1,7 +1,5 @@
-local present, ng = pcall(require, "neogen")
-if not present then
-  return
-end
+local ng = require("neogen")
+local opts = { noremap = true, silent = true }
 
 ng.setup({
   enabled = true,
@@ -14,3 +12,5 @@ ng.setup({
     },
   },
 })
+
+vim.api.nvim_set_keymap({ "i", "n" }, "<leader>ng", ":lua require('neogen').generate()<CR>", opts)

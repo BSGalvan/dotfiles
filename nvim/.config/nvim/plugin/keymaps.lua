@@ -35,30 +35,10 @@ map_key("n", "<leader>k", "<cmd>tabfirst<CR>", opts)
 -- Tab management
 map_key("n", "tn", "<cmd>tabnew<CR>", opts)
 map_key("n", "tc", "<cmd>tabclose<CR>", opts)
-map_key("n", "tm", ":tabm<Space>", { noremap = true })
-map_key("n", "te", ":tabedit<Space>", { noremap = true })
+map_key("n", "tm", ":tabm<Space>", opts)
+map_key("n", "te", ":tabedit<Space>", opts)
 
 -- Open vertical/horizontal splits
-map_key("n", "<Leader>s", ":split<Space>", { noremap = true })
-map_key("n", "<Leader>v", ":vsplit<Space>", { noremap = true })
+map_key("n", "<Leader>s", ":split<Space>", opts)
+map_key("n", "<Leader>v", ":vsplit<Space>", opts)
 
--- Telescope.nvim specific mappings
-map_key("n", "<Space>fb", "<cmd>Telescope buffers<CR>", opts)
-map_key(
-  "n",
-  "<Space>fd",
-  "<cmd>lua require('telescope.builtin').file_browser({cwd = '/home/bsg/dotfiles', hidden = true})<CR>",
-  opts
-)
-map_key("n", "<Space>fe", "<cmd>lua require('telescope').extensions.file_browser.file_browser()<CR>", opts)
-map_key("n", "<Space>fh", "<cmd>Telescope help_tags<CR>", opts)
-map_key("n", "<Space>fo", "<cmd>Telescope oldfiles<CR>", opts)
-map_key("n", "<Space>fq", "<cmd>Telescope quickfix<CR>", opts)
-map_key("n", "<Space>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", opts)
-map_key("n", "<Space>t", "<cmd>Telescope<CR>", opts)
-map_key(
-  "n",
-  "<Space>wk",
-  "<cmd>lua require('telescope.builtin').find_files({cwd = '/home/bsg/notes/wiki/src'})<CR>",
-  opts
-) -- TODO: configure a bit more

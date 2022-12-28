@@ -3,7 +3,9 @@
 
 local opt = vim.opt
 
-vim.g.python3_host_prog = "/usr/bin/python3"
+if vim.fn.has("nvim") and not vim.fn.empty(vim.env.CONDA_PREFIX) then
+  vim.g.python3_host_prog = vim.env.CONDA_PREFIX .. "/bin/python3"
+end
 
 -- TODO: figure out if this order of wildmode customization
 --       is a conscious choice or not.
@@ -23,6 +25,15 @@ opt.autoindent = true -- Turn (auto)indenting ON
 opt.background = "dark" -- Needed for dark bg
 opt.clipboard = "unnamedplus" -- Set clipboard to SYSTEM
 opt.expandtab = true -- Expand <Tab> to spaces
+opt.fillchars = { -- improve look of line separators
+  horiz = "━",
+  horizup = "┻",
+  horizdown = "┳",
+  vert = "┃",
+  vertleft = "┫",
+  vertright = "┣",
+  verthoriz = "╋",
+}
 opt.foldlevel = 99 -- Fold till where?
 opt.foldmethod = "expr" -- Fold at what?
 opt.foldexpr = "nvim_treesitter#foldexpr()" -- enable treesitter-based folding
@@ -51,7 +62,7 @@ opt.wrap = false -- Don't wrap lines
 vim.cmd([[
     augroup set_formatoptions
       autocmd!
-      autocmd BufEnter * lua vim.bo.formatoptions="crjq"
+      autocmd BufEnter * lua vim.bo.formatoptions="cqrnj"
     augroup END
 ]])
 

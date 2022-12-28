@@ -46,9 +46,6 @@ return require("packer").startup({
         "nvim-treesitter/playground",
         "p00f/nvim-ts-rainbow",
       },
-      config = function()
-        require("config.treesitter")
-      end,
     })
 
     --[[
@@ -62,17 +59,16 @@ return require("packer").startup({
       "neovim/nvim-lspconfig",
       as = "lspconfig",
       requires = {
-        {
-          -- lsp-powered signatures while you type!
-          "ray-x/lsp_signature.nvim",
-          config = function()
-            require("config.lsp_signature")
-          end,
-        },
+        -- lsp-powered signatures while you type!
+        "ray-x/lsp_signature.nvim",
         -- Pictograms for neovim's LSP
         "onsails/lspkind-nvim",
         -- Provides the missing :LspInstall command
-        "williamboman/nvim-lsp-installer",
+        -- "williamboman/nvim-lsp-installer",
+        -- "Easily install and manage LSP servers, DAP servers, linters, and
+        -- formatters." ~ from the mason.nvim README
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
       },
     })
 
@@ -112,31 +108,38 @@ return require("packer").startup({
     })
 
     --[[
+    --  Debugging
+    --  This section is for stuff which helps give Neovim
+    --  debugging features
+    --
+    --]]
+    -- Debug Adapter Protocol client in neovim, along with a few niceties.
+    use({
+      "mfussenegger/nvim-dap",
+      requires = {
+        {
+          "theHamsta/nvim-dap-virtual-text",
+          config = function()
+            require("nvim-dap-virtual-text").setup()
+          end,
+        },
+      },
+    })
+
+    use({
+      "rcarriga/nvim-dap-ui",
+      requires = { "mfussenegger/nvim-dap" },
+      config = function()
+        require("dapui").setup()
+      end,
+    })
+
+    --[[
     --   PLUGINS FOR PRODUCTIVITY
     --   This section is for stuff which extends neovim
     --   to be more than just a text-editor
     --   (with some inspiration from the Church of Emacs, of course)
     --]]
-    -- Note-taking and more!
-    use({
-      "nvim-neorg/neorg",
-      after = {
-        "nvim-treesitter",
-        "nvim-cmp",
-      },
-      requires = "nvim-lua/plenary.nvim",
-      config = function()
-        require("config.neorg")
-      end,
-    })
-
-    -- A simpler version of vimwiki, now in Lua!
-    -- use({
-    --   "jakewvincent/mkdnflow.nvim",
-    --   config = function()
-    --     require("config.mkdnflow")
-    --   end,
-    -- })
 
     -- Distraction-free coding for Neovim
     use({
@@ -168,8 +171,6 @@ return require("packer").startup({
     -- Comment stuff out
     use({
       "https://tpope.io/vim/commentary.git",
-      opt = true,
-      keys = { "gc", "gcc" },
     })
 
     -- "... a plugin so good, it should be illegal."
@@ -184,52 +185,27 @@ return require("packer").startup({
     use({
       "bluz71/vim-moonfly-colors",
       as = "moonfly",
-      config = function()
-        require("config.theme")
-      end,
     })
 
     -- Statusline
     use({
       "nvim-lualine/lualine.nvim",
       requires = { "kyazdani42/nvim-web-devicons" },
-      config = function()
-        require("config.lualine")
-      end,
     })
 
     -- Plugin for visible indent levels, even on blank lines
     use({
       "lukas-reineke/indent-blankline.nvim",
-      config = function()
-        require("config.indent-blankline")
-      end,
     })
 
     -- Pretty CSS colors
     use({
-      "norcalli/nvim-colorizer.lua",
-      as = "css-colors",
-      opt = true,
-      cmd = {
-        "ColorizerToggle",
-        "ColorizerAttachToBuffer",
-        "ColorizerDetachFromBuffer",
-        "ColorizerReloadAllBuffers",
-      },
-      config = function()
-        require("config.colorizer")
-      end,
+      "NvChad/nvim-colorizer.lua",
     })
 
     -- Code prettification
     use({
       "mhartington/formatter.nvim",
-      opt = true,
-      event = "BufWritePost",
-      config = function()
-        require("config.formatter")
-      end,
     })
 
     -- Horizontal highlights for markdown files
@@ -243,29 +219,11 @@ return require("packer").startup({
     -- Fancy git decorations for the signcolumn
     use({
       "lewis6991/gitsigns.nvim",
-      config = function()
-        require("config.gitsigns")
-      end,
     })
 
     -- smooth scrolling
     use({
       "karb94/neoscroll.nvim",
-      opt = true,
-      keys = {
-        "<c-d>",
-        "<c-u>",
-        "<c-b>",
-        "<c-f>",
-        "<c-e>",
-        "<c-y>",
-        "zt",
-        "zz",
-        "zb",
-      },
-      config = function()
-        require("config.neoscroll")
-      end,
     })
 
     -- [[

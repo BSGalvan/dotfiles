@@ -54,4 +54,4 @@ require("formatter").setup({
 })
 
 -- Formatter.nvim specific mappings
-map_key("n", "<F5>", "<cmd>FormatWrite<CR>", opts)
+map_key("n", "<F5>", "<cmd>FormatWriteLock<CR>", opts)

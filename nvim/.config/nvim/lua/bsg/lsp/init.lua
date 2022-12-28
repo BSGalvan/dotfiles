@@ -1,10 +1,36 @@
 --[[
---   Configuration for nvim-lspconfig + nvim-lsp-installer
+--   Configuration for nvim-lspconfig + mason.nvim
 --   Stolen from the wiki over at neovim/nvim-lspconfig and from 
---   kabouzeid/dotfiles/blob/main/config/nvim/lua/lsp-settings.lua
+--   kabouzeid/dotfiles/blob/main/config/nvim/lua/lsp-settings.lua,
+--   and this deprecation notice:
+--   https://github.com/williamboman/nvim-lsp-installer/discussions/876
 --]]
 
--- keymaps
+require("mason").setup({
+  ui = {
+    icons = {
+      package_installed = "✓",
+    },
+    border = "rounded",
+  },
+})
+
+local mason_lspconfig = require("mason-lspconfig")
+
+mason_lspconfig.setup({
+  ensure_installed = {
+    "pylsp",
+    "texlab",
+    "bashls",
+    "clangd",
+    "yamlls",
+  },
+})
+
+local lspconfig = require("lspconfig")
+
+-- This function sets up keymaps and whatnot, upon a LSP server attaching to
+-- buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -70,7 +96,7 @@ local on_attach = function(client, bufnr)
     )
   end
 
-  -- Set borders for floating windows
+  -- Set borders for floating windows; from the README.md at bluz71/vim-moonfly-colors
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",
   })
@@ -79,91 +105,55 @@ local on_attach = function(client, bufnr)
     border = "rounded",
   })
 
+  vim.diagnostic.config({
+    float = { border = "rounded", source = "always" },
+    severity_sort = true,
+    update_in_insert = true,
+    show_header = true,
+  })
+
   -- Change diagnostic symbols in the sign column (gutter)
   local signs = {
-    Error = " ",
-    Warning = " ",
+    Error = " ",
+    Warn = " ",
     Hint = " ",
-    Information = " ",
+    Information = " ",
   }
 
   for type, icon in pairs(signs) do
-    local hl = "LspDiagnosticsSign" .. type
+    local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
   end
 end
 
--- function that activates keymaps and enables snippet support
-local function make_config(server_name)
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  -- What is this huge chunk of code?
-  capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown", "plaintext" }
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.preselectSupport = true
-  capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-  capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-  capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-  capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-  capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-      "documentation",
-      "detail",
-      "additionalTextEdits",
-    },
-  }
-
-  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-
-  local config = {
-    -- enable all the stuff above + snippets
-    capabilities = capabilities,
-    -- map buffer local keybindings when the language server attaches
-    on_attach = on_attach,
-  }
-
-  if server_name == "clangd" then
-    config.filetypes = { "c", "cpp" } -- we don't want objective-c and objective-cpp!
-  end
-  if server_name == "vim" then
-    config.init_options = { isNeovim = true }
-  end
-
-  return config
-end
-
--- nvim-lsp-installer
--- local function setup_servers()
---   local lsp_installer = require("nvim-lsp-installer")
-
---   -- get all installed servers
---   local lsp_installer_servers = require("nvim-lsp-installer.servers")
-
---   -- loop over all installed servers and give them configs
---   -- defined above, if active; if not installed, queue them to
---   -- be installed
---   for _, server in pairs(lsp_installer_servers) do
---     local config = make_config()
---     local server_available, requested_server = lsp_installer_servers.get_server(server.name)
-
---     if server_available then
---       requested_server:on_ready(function()
---         local opts = config
---         requested_server:setup(opts)
---       end)
---       if not requested_server:is_installed() then
---         -- Queue the server to be installed
---         requested_server:install()
---       end
---     end
---   end
--- end
-
--- setup_servers()
-
--- setup servers installed with nvim-lsp-installer
--- Register a handler that will be called for all installed servers.
-require("nvim-lsp-installer").on_server_ready(function(server)
-  server:setup(make_config(server.name))
-  vim.cmd([[ do User LspAttachBuffers ]])
-end)
+mason_lspconfig.setup_handlers({
+  function(server_name)
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    if server_name == "sumneko_lua" then
+      local settings = {
+        Lua = {
+          runtime = {
+            -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+            version = "LuaJIT",
+          },
+          diagnostics = {
+            -- Get the language server to recognize the `vim` global
+            globals = { "vim" },
+          },
+          workspace = {
+            -- Make the server aware of Neovim runtime files
+            library = vim.api.nvim_get_runtime_file("", true),
+            checkThirdParty = false,
+          },
+          -- Do not send telemetry data containing a randomized but unique identifier
+          telemetry = {
+            enable = false,
+          },
+        },
+      }
+      lspconfig[server_name].setup({ capabilities = capabilities, on_attach = on_attach, settings = settings })
+    else
+      lspconfig[server_name].setup({ capabilities = capabilities, on_attach = on_attach })
+    end
+  end,
+})
